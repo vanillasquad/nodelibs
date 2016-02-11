@@ -35,7 +35,6 @@ tape('madlib reset() function sets currentMadLib object', function(t) {
 tape('testing fillBlank function', function(t) {
     madlibber.reset();
     var actual = madlibber.fillBlank('table');
-    var required = madlibber.currentMadLibGetter().required;
     t.equal(actual, '', 'if userBlanks length is less than required, it returns an empty string');
 
     madlibber.userBlanksSetter(['table', 'chair', 'house']);
