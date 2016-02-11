@@ -1,4 +1,13 @@
 var tape = require('tape');
+var server = require('../server/server.js');
+
+
+tape('server.js has function .init()',function(t){
+    t.equal(typeof server.init, 'function', 'server.init is a function');
+    t.end();
+});
+
+var tape = require('tape');
 var hyperquest = require('hyperquest');
 var concat = require('concat-stream');
 var app = require('../server/app.js');
