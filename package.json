@@ -1,0 +1,29 @@
+{
+  "name": "nodelibs",
+  "version": "1.0.0",
+  "description": "A node based version of madlibs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanillasquad/nodelibs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vanillasquad/nodelibs/issues"
+  },
+  "homepage": "https://github.com/vanillasquad/nodelibs#readme",
+  "devDependencies": {
+    "hyperquest": "^1.2.0",
+    "istanbul": "^0.4.2",
+    "nodemon": "^1.8.1",
+    "tape": "^4.4.0"
+  },
+  "dependencies": {
+    "env2": "^2.0.4"
+  }
+}
