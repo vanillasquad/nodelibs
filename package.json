@@ -7,7 +7,7 @@
     "test": "tape ./tests/*",
     "start": "node ./server/app.js",
     "nodemon": "nodemon ./server/app.js",
-    "coverage": "node ./node_modules/.bin/istanbul cover ./tests/*"
+    "coverage": "node ./node_modules/.bin/istanbul cover tape ./tests/*"
   },
   "repository": {
     "type": "git",
