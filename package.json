@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/vanillasquad/nodelibs#readme",
   "devDependencies": {
+    "colors": "^1.1.2",
     "concat-stream": "^1.5.1",
     "hyperquest": "^1.2.0",
     "istanbul": "^0.4.2",
@@ -28,5 +29,8 @@
   },
   "dependencies": {
     "env2": "^2.0.4"
+  },
+  "jshintConfig": {
+    "esnext": true
   }
 }
