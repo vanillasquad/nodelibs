@@ -12,6 +12,7 @@ var hyperquest = require('hyperquest');
 var concat = require('concat-stream');
 var app = require('../server/app.js');
 var fs = require('fs');
+var madlibber = require('../server/madlibber.js');
 
 tape('server returns 200 on homepage', function(t) {
     hyperquest.get('http://localhost:8000/', function(error, response) {
@@ -48,6 +49,31 @@ tape('test 404 handler', function(t) {
     hyperquest.get('http://localhost:8000' + invalidURL, function(error, response) {
         response.pipe(concat(function(payload) {
             t.ok(payload.toString('utf8').match('404'), 'assert that 404 responses contain 404 in the body');
+            t.end();
+        }));
+    });
+});
+
+
+tape('submitWord endpoint calls madlibber file and returns string', function(t){
+    var submitWord = 'submit-word:table';
+    madlibber.reset(); //sets up madlibber
+    hyperquest.get('http://localhost:8000/' + submitWord, function(error, response){
+        response.pipe(concat(function(payload){
+            t.equal(payload.toString('utf8'), '', 'Client call to submit word, and user hasnt finished, should return empty string');
+            t.end();
+        }));
+    });
+});
+
+tape('submitWord endpoint when total words are submitted returns a full sentence', function(t){
+    var submitWord = 'submit-word:going';
+    // madlibber.reset();
+    madlibber.userBlanksSetter(madlibber.testUserBlanksAlmostFull);
+    madlibber.currentMadLibSetter(madlibber.testMadlibObj);
+    hyperquest.get('http://localhost:8000/' + submitWord, function(error, response){
+        response.pipe(concat(function(payload){
+            t.equal(payload.toString('utf8'), madlibber.testCompleteSentence, 'Client call to submit word with all words should return a sentence');
             t.end();
         }));
     });
