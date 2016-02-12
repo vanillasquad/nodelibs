@@ -54,4 +54,6 @@ tape('test 404 handler', function(t) {
 });
 
 // check content of autocomplete, submitHandler
->>>>>>> master
+tape.onFinish(function() {
+    app.server.close();
+});
