@@ -1,7 +1,6 @@
 var http = require('http');
 var colors = require('colors');
 
-var apiKey = 'b231dda8ea9e189ffe00d053ea506a8cbd045e2269a103e07';
 function checkWord(word, callback) {
     console.log('check word fired......');
     var options = {
