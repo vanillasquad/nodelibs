@@ -1,6 +1,7 @@
 var fs = require('fs');
 var autocomplete = require('./autocomplete.js');
-var madLibber = require('./madlibber.js');
+var madlibber = require('./madlibber.js');
+var colors = require('colors');
 
 function homeHandler(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
@@ -21,6 +22,13 @@ function autocompleteHandler() {
 
 function submitHandler() {
 
+}
+
+function madlibHandler(request, response) {
+    var word = request.url.match(/:([\w]*)/i)[1]; //match returns an Array!!!
+    var blank = madlibber.fillBlank(word);
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.end(blank);
 }
 
 function notFoundHandler(request, response) {
@@ -48,5 +56,6 @@ module.exports = {
     autocompleteHandler: autocompleteHandler,
     submitHandler: submitHandler,
     notFoundHandler: notFoundHandler,
-    resourceHandler: resourceHandler
+    resourceHandler: resourceHandler,
+    madlibHandler: madlibHandler
 };

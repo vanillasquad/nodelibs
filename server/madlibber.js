@@ -51,6 +51,13 @@ function userBlanksSetter(set) {
     return userBlanks;
 }
 
+var testMadlibObj = {
+    "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
+    "required": ["exclamation","verb","noun", "adjective"],
+};
+var testUserBlanksAlmostFull = ['table', 'chair', 'house'];
+var testCompleteSentence = 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.';
+
 
 module.exports = {
     reset: reset,
@@ -58,5 +65,8 @@ module.exports = {
     userBlanksGetter: userBlanksGetter,
     userBlanksSetter: userBlanksSetter,
     currentMadLibGetter: currentMadLibGetter,
-    currentMadLibSetter: currentMadLibSetter
+    currentMadLibSetter: currentMadLibSetter,
+    testMadlibObj: testMadlibObj,
+    testUserBlanksAlmostFull: testUserBlanksAlmostFull,
+    testCompleteSentence: testCompleteSentence
 };
