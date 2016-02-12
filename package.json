@@ -28,5 +28,8 @@
   },
   "dependencies": {
     "env2": "^2.0.4"
+  },
+  "jshintConfig": {
+      "esnext": true
   }
 }
