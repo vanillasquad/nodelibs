@@ -3,13 +3,21 @@
     <head>
         <meta charset="utf-8">
         <title>NodeLib: The Node.js based madlib engine!</title>
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <header>
             <h1>NodeLibs</h1>
         </header>
         <main>
+			<div id="loading-screen" class="invisible loading-screen">
+				<div class="avatars">
+					<div class="node-face node-face-1"></div>
+					<div class="node-face node-face-2"></div>
+					<div class="node-face node-face-3"></div>
+				</div>
+				<h3>Generating your madlib!</h3>
+			</div>
             <h3 id="required"></h3>
             <form id="word-form">
                 <input type="text" name="word" value="" placeholder="Enter word">
