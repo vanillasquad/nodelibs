@@ -19,18 +19,14 @@ function homeHandler(request, response) {
 function autocompleteHandler(request, response) {
     var queryString = request.url.split('?')[1];
     var rawParams = queryString.split('&');
-    var paramsObject = rawParams.reduce(function(prev, curr) {
-        var param = curr.split('=')[0];
-        var value = curr.split('=')[1];
-        prev[param] = value;
+    var queryParams = rawParams.reduce(function(prev, curr) {
+        var keyval = curr.split('=');
+        prev[keyval[0]] = keyval[1];
         return prev;
     }, {});
-    console.log(paramsObject);
-    var fragment = paramsObject.fragment;
-    var type = paramsObject.type;
-    console.log(type.red, fragment.red, request.url);
-    var dict = autocomplete.getDict(type);
-    var matches = dict.findMatches(fragment, 10, false);
+    var randomise = (queryParams.randomise == 'true') ? true : false;
+    var dict = autocomplete.getDict(queryParams.type);
+    var matches = dict.findMatches(queryParams.fragment, 10, randomise);
     response.writeHead(200, {'Content-Type': 'application/json'});
     var matchObject = {
         "suggestions": matches

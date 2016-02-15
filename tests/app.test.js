@@ -84,11 +84,25 @@ tape('autocompleteHandler returns a list of words matching the beginning of the 
     t.plan(10);
     var wordType = 'adverbs';
     var wordFragment = 'ab';
-    hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType, function(error, response) {
+    var randomise = false;
+    hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType + '&randomise=' + randomise, function(error, response) {
         response.pipe(concat(function(payload) {
-            console.log(payload.toString('utf8').green);
             JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
                 t.ok(word.search(wordFragment) === 0, 'Assert ' + word + ' starts with ' + wordFragment);
+            });
+        }));
+    });
+});
+
+tape('autocompleteHandler should return a random list of words if randomise is set to true', function(t) {
+    t.plan(10);
+    var wordType = 'nouns';
+    var wordFragment = 'be';
+    var randomise = true;
+    hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType + '&randomise=' + randomise, function(error, response) {
+        response.pipe(concat(function(payload) {
+            JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
+                t.ok(word.search(wordFragment) === 0, 'Assert ' + word + 'starts with ' + wordFragment);
             });
         }));
     });

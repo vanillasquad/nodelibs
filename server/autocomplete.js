@@ -35,7 +35,7 @@ var findMatches = function(wordFragment, numberWordsReturned, randomise) {
         var randomMatches = [];
         while (randomMatches.length < Math.min(numberWordsReturned, matches.length)) {
             var randomNum = Math.floor(Math.random() * matches.length);
-            randomMatches.push(this.words.splice(randomNum, 1));
+            randomMatches.push(matches.splice(randomNum, 1)[0]);
         }
         return randomMatches;
     } else {
