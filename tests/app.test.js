@@ -1,19 +1,19 @@
 var tape = require('tape');
-var server = require('../server/server.js');
 var colors = require('colors');
-
-
-tape('server.js has function .init()',function(t){
-    t.equal(typeof server.init, 'function', 'server.init is a function');
-    t.end();
-});
-
-var tape = require('tape');
 var hyperquest = require('hyperquest');
 var concat = require('concat-stream');
 var app = require('../server/app.js');
 var fs = require('fs');
 var madlibber = require('../server/madlibber.js');
+
+// helper function, returns boolean to check if nouns verbs etc are present
+function requiredPresent(payload) {
+    var requiredWords = ['noun', 'verb', 'adjective'];
+    return requiredWords.reduce(function(prev, curr) {
+        var required = JSON.parse(payload).partOfSpeech;
+        return prev || (required.indexOf(curr) > -1);
+    }, false);
+}
 
 tape('server returns 200 on homepage', function(t) {
     hyperquest.get('http://localhost:8000/', function(error, response) {
@@ -59,11 +59,7 @@ tape('startHandler should return the first required word', function(t) {
     var requiredWords = ['noun', 'verb', 'adjective'];
     hyperquest.get('http://localhost:8000/start-madlibber', function(error, response) {
         response.pipe(concat(function(payload) {
-            var requiredPresent = requiredWords.reduce(function(prev, curr) {
-                var required = JSON.parse(payload).partOfSpeech;
-                return prev || (required.indexOf(curr) > -1);
-            }, false);
-            t.ok(requiredPresent, 'assert that startHandler returns required word');
+            t.ok(requiredPresent(payload), 'assert that startHandler returns required word');
             t.end();
         }));
     });
@@ -74,7 +70,10 @@ tape('submitWord endpoint calls madlibber file and returns string', function(t){
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get('http://localhost:8000/' + submitWord, function(error, response){
         response.pipe(concat(function(payload){
-            t.equal(payload.toString('utf8'), '', 'Client call to submit word, and user hasnt finished, should return empty string');
+            var responseObject = JSON.parse(payload);
+            t.equal(responseObject.completed, false ,'status should be false after first call to submitWord');
+            t.equal(responseObject.data, '', 'data should be empty on first call');
+            t.ok(requiredPresent(payload), 'part of speech should return noun verb etc on first call');
             t.end();
         }));
     });
@@ -87,7 +86,7 @@ tape('submitWord endpoint when total words are submitted returns a full sentence
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get('http://localhost:8000/' + submitWord, function(error, response){
         response.pipe(concat(function(payload){
-            t.equal(payload.toString('utf8'), 'table! he said chair as he jumped into his convertible exclamation house and drove off with his pretty wife.', 'Client call to submit word with all words should return a sentence');
+            t.equal(JSON.parse(payload).data, 'table! he said chair as he jumped into his convertible exclamation house and drove off with his pretty wife.', 'Client call to submit word with all words should return a sentence');
             t.end();
         }));
     });

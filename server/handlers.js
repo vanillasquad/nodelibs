@@ -21,7 +21,11 @@ function homeHandler(request, response) {
 function startHandler(request, response) {
     var required = madlibber.reset();
     response.writeHead(200, {'Content-Type': 'application/json'});
-    response.end(JSON.stringify({"partOfSpeech": required[0]}));
+    response.end(JSON.stringify({
+        "complete": false,
+        "partOfSpeech": required,
+        "data": "",
+    }));
 }
 
 function autocompleteHandler(request, response) {
@@ -51,8 +55,8 @@ function submitHandler(request, response) {
         response.end('wordnik error');
     };
     var successCallback = function(){
-        var blank = madlibber.fillBlank(word);
-        response.end(blank);
+        var responseObject = madlibber.fillBlank(word);
+        response.end(JSON.stringify(responseObject));
     };
 
     wordnik.checkWord(word, errorCallback, successCallback);

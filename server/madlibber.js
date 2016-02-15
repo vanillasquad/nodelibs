@@ -21,14 +21,14 @@ function fillBlank(word) {
     if (getNextPartOfSpeech()){
         //if madlib is incomplete
         return {
-            "verified": true,
-            "msg": '',
-            "data": getNextPartOfSpeech(),
+            "completed": false,
+            "partOfSpeech": getNextPartOfSpeech(),
+            "data": "",
         };
     } else {
         return {
-            "verified": true,
-            "msg": '',
+            "completed": true,
+            "partOfSpeech": "",
             "data": generateSentence(userBlanks, currentMadLib.sentences),
         };
     }
