@@ -17,9 +17,31 @@ function homeHandler(request, response) {
 }
 
 function autocompleteHandler(request, response) {
-    var type = request.url.match(/type=(.+)/i)[1];
+    var queryString = request.url.split('?')[1];
+    var rawParams = queryString.split('&');
+    // var type = rawParams.map(function(param) {
+    //     var splitParam = param.split('=');
+    //     var obj = {};
+    //     obj[splitParam[0]] = splitParam[1];
+    //     return obj;
+    // });
+    var paramsObject = rawParams.reduce(function(prev, curr) {
+        var param = curr.split('=')[0];
+        var value = curr.split('=')[1];
+        prev[param] = value;
+        return prev;
+    }, {});
+    console.log(paramsObject);
+    var fragment = paramsObject.fragment;
+    var type = paramsObject.type;
+    console.log(type.red, fragment.red, request.url);
     var dict = autocomplete.getDict(type);
-
+    var matches = dict.findMatches(fragment, 10, false);
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    var matchObject = {
+        "suggestions": matches
+    };
+    response.end(JSON.stringify(matchObject));
 }
 
 function submitHandler() {

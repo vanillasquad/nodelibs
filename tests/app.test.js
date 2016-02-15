@@ -1,5 +1,6 @@
 var tape = require('tape');
 var server = require('../server/server.js');
+var colors = require('colors');
 
 
 tape('server.js has function .init()',function(t){
@@ -85,6 +86,7 @@ tape('autocompleteHandler returns a list of words matching the beginning of the 
     var wordFragment = 'ab';
     hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType, function(error, response) {
         response.pipe(concat(function(payload) {
+            console.log(payload.toString('utf8').green);
             JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
                 t.ok(word.search(wordFragment) === 0, 'Assert ' + word + ' starts with ' + wordFragment);
             });

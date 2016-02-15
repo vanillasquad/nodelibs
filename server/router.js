@@ -10,7 +10,7 @@ function router(request, response) {
     } else if (request.url.indexOf('submit-word') > -1) {
         handler.madlibHandler(request, response);
     } else if (request.url.search('/auto') === 0) {
-        ///
+        handler.autocompleteHandler(request, response);
     } else {
         handler.notFoundHandler(request, response);
     }
