@@ -15,7 +15,8 @@ function reset() {
 function fillBlank(word, partOfSpeech) {
     var required = currentMadLib.required;
     //check if user has completed madlib
-    if (partOfSpeech === required[userBlanks.length]) {
+    console.log('word chosen: ' + word, 'part of speech from wordnik: ' + partOfSpeech, 'required part of speech: ' + required[userBlanks.length]);
+    if (partOfSpeech.indexOf(required[userBlanks.length]) > -1) {
         userBlanks.push(word);
         if (userBlanks.length === required.length){
             return generateSentence(userBlanks, currentMadLib.sentences);
