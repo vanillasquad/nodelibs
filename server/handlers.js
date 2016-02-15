@@ -18,10 +18,10 @@ function homeHandler(request, response) {
     });
 }
 
-function start(request, response) {
+function startHandler(request, response) {
     var required = madlibber.reset();
     response.writeHead(200, {'Content-Type': 'application/json'});
-    response.end(JSON.stringify(required));
+    response.end(JSON.stringify({"partOfSpeech": required[0]}));
 }
 
 function autocompleteHandler(request, response) {
@@ -54,7 +54,7 @@ function submitHandler(request, response) {
         response.end('wordnik error');
     };
     var successCallback = function(partOfSpeech){
-        var blank = madlibber.fillBlank(word, partOfSpeech);
+        var responseObj = madlibber.fillBlank(word, partOfSpeech);
         response.end(blank);
     };
 
@@ -83,7 +83,7 @@ function resourceHandler(request, response) {
 
 module.exports = {
     homeHandler: homeHandler,
-    start: start,
+    startHandler: startHandler,
     autocompleteHandler: autocompleteHandler,
     submitHandler: submitHandler,
     notFoundHandler: notFoundHandler,

@@ -2,6 +2,10 @@ var madlibs = require('../server/madlibs.js');
 var currentMadLib = {};
 var userBlanks = [];
 
+function getNextPartOfSpeech() {
+    return (userBlanks.length < currentMadLib.required.length) ? currentMadLib.required[userBlanks.length] : "";
+}
+
 function reset() {
     // [0] at some point needs to be random
     var randomLib = Math.floor(Math.random() * madlibs.get.length);
@@ -9,7 +13,7 @@ function reset() {
     // console.log(randomLib);
     currentMadLib = madlibs.get[randomLib];
     // console.log(currentMadLib);
-    return currentMadLib.required;
+    return getNextPartOfSpeech();
 }
 
 function fillBlank(word, partOfSpeech) {
@@ -18,14 +22,26 @@ function fillBlank(word, partOfSpeech) {
     console.log('word chosen: ' + word, 'part of speech from wordnik: ' + partOfSpeech, 'required part of speech: ' + required[userBlanks.length]);
     if (partOfSpeech.indexOf(required[userBlanks.length]) > -1) {
         userBlanks.push(word);
-        if (userBlanks.length === required.length){
-            return generateSentence(userBlanks, currentMadLib.sentences);
+        if (getNextPartOfSpeech()){
+            //if madlib is incomplete
+            return {
+                "verified": true,
+                "msg": '',
+                "data": getNextPartOfSpeech(),
+            };
         } else {
-            //else if madlib is incomplete
-            return "";
+            return {
+                "verified": true,
+                "msg": '',
+                "data": generateSentence(userBlanks, currentMadLib.sentences),
+            };
         }
     } else {
-        return 'incorrect part of speech';
+        return {
+            "verified": false,
+            "msg": 'Incorrect part of speech',
+            "data": "",
+        };
     }
 }
 

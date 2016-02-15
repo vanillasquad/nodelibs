@@ -55,6 +55,19 @@ tape('test 404 handler', function(t) {
     });
 });
 
+tape('startHandler should return the first required word', function(t) {
+    var requiredWords = ['noun', 'verb', 'adjective'];
+    hyperquest.get('http://localhost:8000/start-madlibber', function(error, response) {
+        response.pipe(concat(function(payload) {
+            var requiredPresent = requiredWords.reduce(function(prev, curr) {
+                var required = JSON.parse(payload).partOfSpeech;
+                return prev || (required.indexOf(curr) > -1);
+            }, false);
+            t.ok(requiredPresent, 'assert that startHandler returns required word');
+            t.end();
+        }));
+    });
+});
 
 tape('submitWord endpoint calls madlibber file and returns string', function(t){
     var submitWord = 'submit-word:table';
