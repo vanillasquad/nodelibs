@@ -19,12 +19,6 @@ function homeHandler(request, response) {
 function autocompleteHandler(request, response) {
     var queryString = request.url.split('?')[1];
     var rawParams = queryString.split('&');
-    // var type = rawParams.map(function(param) {
-    //     var splitParam = param.split('=');
-    //     var obj = {};
-    //     obj[splitParam[0]] = splitParam[1];
-    //     return obj;
-    // });
     var paramsObject = rawParams.reduce(function(prev, curr) {
         var param = curr.split('=')[0];
         var value = curr.split('=')[1];
