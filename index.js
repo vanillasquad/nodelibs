@@ -4,6 +4,10 @@ var requiredCounter = 0;
 
 document.getElementById('start').addEventListener('click', function(e) {
     var start = new XMLHttpRequest();
+    this.classList.toggle('hidden');
+    document.querySelector('.form').classList.toggle('hidden');
+
+    // this.className = 'btn';
     start.addEventListener('load', function(evt) {
         required = JSON.parse(evt.target.response);
         requiredCounter = 0;

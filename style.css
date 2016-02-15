@@ -1,3 +1,43 @@
-body {
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: courier, arial;
+}
+
+header {
     background-color: #54B970;
+    text-align: center;
+    height: 30vh;
+}
+
+h3 {
+    color: white;
+    letter-spacing: -1px;
+    font-size: 15px;
+}
+
+.logo {
+    width: 70vw;
+    max-width: 500px;
+    padding-top: 7vh;
+    padding-bottom: 2vh;
+}
+
+
+.show {
+    display: block;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    padding: 10px 40px;
+    width: 130px;
+    margin:auto;
+    display: block;
+    margin-top: 15vh;
+}
+
+.hidden {
+    display: none;
 }

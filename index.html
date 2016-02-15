@@ -4,23 +4,28 @@
         <meta charset="utf-8">
         <title>NodeLib: The Node.js based madlib engine!</title>
         <link rel="stylesheet" href="/style.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <header>
-            <h1>NodeLibs</h1>
-        </header>
-        <main>
-            <h3 id="required"></h3>
-            <form id="word-form">
-                <input type="text" name="word" value="" placeholder="Enter word">
-                <div id="suggestions">
+        <div class="nodelib-container">
+            <header>
+                <img src="/img/nodelibs-logo.png" alt="nodelib logo" class="logo"/>
+                <h3>A madlib generator built with node.js</h3>
+            </header>
+            <main>
+                <h3 id="required"></h3>
+                <form id="word-form" class="form hidden">
+                    <input type="text" name="word" value="" placeholder="Enter word">
+                    <div id="suggestions">
 
-                </div>
-                <input type="submit" name="submit-btn" value="Submit Word">
-            </form>
-            <button id="start" type="button" name="button">Start</button>
-            <div id="madlib"></div>
-        </main>
+                    </div>
+                    <input type="submit" name="submit-btn" value="Submit Word" class="btn">
+                </form>
+                <button id="start" type="button" name="button" class="btn">Start</button>
+                <div id="madlib"></div>
+            </main>
+        </div>
         <script type="text/javascript" src="index.js"></script>
     </body>
 </html>
