@@ -4,26 +4,36 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
         type: 'nouns',
         randomise: 'true',
     };
+    if (options.fragment && options.fragment.length > 0) {
+        var queryString = Object.keys(options).map(function(key) {
+            return key + '=' + options[key];
+        }).join('&');
 
-    var queryString = Object.keys(options).map(function(key) {
-        return key + '=' + options[key];
-    }).join('&');
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8000/auto?' + queryString);
+        xhr.send();
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://localhost:8000/auto?' + queryString);
-    xhr.send();
-
-    xhr.addEventListener('load', function(evt) {
-        var container = document.getElementById('suggestions');
-        var list = document.createElement('ul');
-        container.innerHTML = '';
-        JSON.parse(evt.target.response).suggestions.forEach(function(word) {
-            var opt = document.createElement('ul');
-            opt.value = word;
-            datalist.appendChild(opt);
+        xhr.addEventListener('load', function(evt) {
+            var container = document.getElementById('suggestions');
+            var list = document.createElement('ul');
+            container.innerHTML = '';
+            JSON.parse(evt.target.response).suggestions.forEach(function(word) {
+                var opt = document.createElement('li');
+                opt.innerHTML = word;
+                opt.class = 'autocomplete-option';
+                opt.addEventListener('click', autofill);
+                list.appendChild(opt);
+            });
+            container.appendChild(list);
         });
-    });
+    } else {
+        document.getElementById('suggestions').innerHTML = '';
+    }
 });
+
+function autofill(evt) {
+    document.getElementById('word-form').firstElementChild.value = evt.target.innerHTML;
+}
 
 document.getElementById('word-form').addEventListener('submit', function(e) {
 
