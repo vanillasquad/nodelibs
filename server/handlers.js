@@ -43,9 +43,6 @@ function autocompleteHandler(request, response) {
 }
 
 function submitHandler(request, response) {
-    console.log('________AT BEGINNING OF SUBMIT___________');
-    console.log('userBlanks is: ' + madlibber.userBlanks);
-    console.log('Required words are: ' + madlibber.currentMadLib);
     var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
 
     var errorCallback = function(){
@@ -53,8 +50,8 @@ function submitHandler(request, response) {
         response.writeHead(200, {'Content-Type': 'text/html'});
         response.end('wordnik error');
     };
-    var successCallback = function(partOfSpeech){
-        var blank = madlibber.fillBlank(word, partOfSpeech);
+    var successCallback = function(){
+        var blank = madlibber.fillBlank(word);
         response.end(blank);
     };
 
