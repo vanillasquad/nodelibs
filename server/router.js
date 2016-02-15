@@ -11,6 +11,8 @@ function router(request, response) {
         handler.submitHandler(request, response);
     } else if (request.url.search('/auto') === 0) {
         handler.autocompleteHandler(request, response);
+    } else if (request.url.indexOf('start-madlibber') > -1){
+        handler.start(request, response);
     } else {
         handler.notFoundHandler(request, response);
     }
