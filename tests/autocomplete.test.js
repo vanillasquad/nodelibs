@@ -25,4 +25,4 @@ tape('check matches can be found for adjectives', function(t) {
 
 });
 
-// autocomplete.getDict should return object with array of strings(words), and findmatches function
+// TODO add test for randomised matching
