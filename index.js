@@ -14,7 +14,14 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
     xhr.send();
 
     xhr.addEventListener('load', function(evt) {
-        console.log(evt.target.response);
+        var container = document.getElementById('suggestions');
+        var list = document.createElement('ul');
+        container.innerHTML = '';
+        JSON.parse(evt.target.response).suggestions.forEach(function(word) {
+            var opt = document.createElement('ul');
+            opt.value = word;
+            datalist.appendChild(opt);
+        });
     });
 });
 
