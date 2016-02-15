@@ -1,7 +1,8 @@
 var http = require('http');
 var colors = require('colors');
+var apiKey = '6f0769a691184a5fb49050d636602a5788f5a7c3a89e3e68c';
 
-function checkWord(word, callback) {
+function checkWord(word, errorCallback, successCallback) {
     console.log('check word fired......');
     var options = {
         hostname: 'api.wordnik.com',
@@ -16,10 +17,10 @@ function checkWord(word, callback) {
             data = JSON.parse(data);
             //if wordnik doesn't recognise the word
             if(data.length === 0){
-                return callback('try a different word');
+                return errorCallback() ;
             }
             else {
-                return callback(data[0].partOfSpeech);
+                return successCallback(data[0].partOfSpeech);
             // callback function will take the type of word as arg
             }
         });

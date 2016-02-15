@@ -1,6 +1,7 @@
 var fs = require('fs');
 var autocomplete = require('./autocomplete.js');
 var madlibber = require('./madlibber.js');
+var wordnik = require('./wordnik.js');
 var colors = require('colors');
 
 function homeHandler(request, response) {
@@ -34,15 +35,20 @@ function autocompleteHandler(request, response) {
     response.end(JSON.stringify(matchObject));
 }
 
-function submitHandler() {
+function submitHandler(request, response) {
+    var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
 
-}
+    var errorCallback = function(){
+        //Unsure of status code number!!!!!!!!!!!!!!!!!!!!!!!!
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('wordnik error');
+    };
+    var successCallback = function(partOfSpeech){
+        var blank = madlibber.fillBlank(word, partOfSpeech);
+        response.end(blank);
+    };
 
-function madlibHandler(request, response) {
-    var word = request.url.match(/:([\w]*)/i)[1]; //match returns an Array!!!
-    var blank = madlibber.fillBlank(word);
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(blank);
+    wordnik.checkWord(word, errorCallback, successCallback);
 }
 
 function notFoundHandler(request, response) {
@@ -71,5 +77,4 @@ module.exports = {
     submitHandler: submitHandler,
     notFoundHandler: notFoundHandler,
     resourceHandler: resourceHandler,
-    madlibHandler: madlibHandler
 };

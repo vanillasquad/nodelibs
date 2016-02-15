@@ -58,7 +58,7 @@ tape('test 404 handler', function(t) {
 
 tape('submitWord endpoint calls madlibber file and returns string', function(t){
     var submitWord = 'submit-word:table';
-    madlibber.reset(); //sets up madlibber
+    madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get('http://localhost:8000/' + submitWord, function(error, response){
         response.pipe(concat(function(payload){
             t.equal(payload.toString('utf8'), '', 'Client call to submit word, and user hasnt finished, should return empty string');
@@ -68,13 +68,24 @@ tape('submitWord endpoint calls madlibber file and returns string', function(t){
 });
 
 tape('submitWord endpoint when total words are submitted returns a full sentence', function(t){
-    var submitWord = 'submit-word:going';
+    var submitWord = 'submit-word:pretty';
     // madlibber.reset();
     madlibber.userBlanksSetter(madlibber.testUserBlanksAlmostFull);
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get('http://localhost:8000/' + submitWord, function(error, response){
         response.pipe(concat(function(payload){
-            t.equal(payload.toString('utf8'), madlibber.testCompleteSentence, 'Client call to submit word with all words should return a sentence');
+            t.equal(payload.toString('utf8'), 'table! he said chair as he jumped into his convertible exclamation house and drove off with his pretty wife.', 'Client call to submit word with all words should return a sentence');
+            t.end();
+        }));
+    });
+});
+
+tape('submitHandler returns an error when input word does not exist', function(t) {
+    var submitWord = 'submit-word:hewufjkhds';
+    hyperquest.get('http://localhost:8000/' + submitWord, function(error, response) {
+        response.pipe(concat(function(payload) {
+            console.log(payload, payload.toString('utf8'));
+            t.equal(payload.toString('utf8'), 'wordnik error', 'Checks if word exists in wordnik');
             t.end();
         }));
     });
