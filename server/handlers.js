@@ -16,8 +16,10 @@ function homeHandler(request, response) {
     });
 }
 
-function autocompleteHandler() {
-    
+function autocompleteHandler(request, response) {
+    var type = request.url.match(/type=(.+)/i)[1];
+    var dict = autocomplete.getDict(type);
+
 }
 
 function submitHandler() {

@@ -80,6 +80,7 @@ tape('submitWord endpoint when total words are submitted returns a full sentence
 });
 
 tape('autocompleteHandler returns a list of words matching the beginning of the input', function(t) {
+    t.plan(10);
     var wordType = 'adverbs';
     var wordFragment = 'ab';
     hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType, function(error, response) {
