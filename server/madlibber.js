@@ -2,6 +2,10 @@ var madlibs = require('../server/madlibs.js');
 var currentMadLib = {};
 var userBlanks = [];
 
+function getNextPartOfSpeech() {
+    return (userBlanks.length < currentMadLib.required.length) ? currentMadLib.required[userBlanks.length] : "";
+}
+
 function reset() {
     // [0] at some point needs to be random
     var randomLib = Math.floor(Math.random() * madlibs.get.length);
@@ -9,20 +13,25 @@ function reset() {
     // console.log(randomLib);
     currentMadLib = madlibs.get[randomLib];
     // console.log(currentMadLib);
-    return currentMadLib.required;
+    return getNextPartOfSpeech();
 }
 
 function fillBlank(word) {
-    var required = currentMadLib.required;
-    //check if user has completed madlib    
     userBlanks.push(word);
-    if (userBlanks.length === required.length){
-        return generateSentence(userBlanks, currentMadLib.sentences);
+    if (getNextPartOfSpeech()){
+        //if madlib is incomplete
+        return {
+            "completed": false,
+            "partOfSpeech": getNextPartOfSpeech(),
+            "data": "",
+        };
     } else {
-        //else if madlib is incomplete
-        return "";
+        return {
+            "completed": true,
+            "partOfSpeech": "",
+            "data": generateSentence(userBlanks, currentMadLib.sentences),
+        };
     }
-
 }
 
 function generateSentence(userBlanks, sentences){

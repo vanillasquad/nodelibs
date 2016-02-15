@@ -7,10 +7,9 @@ var testMadlibObj = {
 };
 var testUserBlanksFull = ['table', 'chair', 'house', 'going'];
 
-tape('madlib contains reset() function that returns blanks', function(t) {
+tape('madlib contains reset() function that returns the next part of speech', function(t) {
     var actual = madlibber.reset();
-    t.ok(actual instanceof Array, 'reset returns an array');
-    t.ok(actual.length > 0, 'array has at least 1 entry');
+    t.equal(typeof actual, 'string', 'reset returns a string');
     t.end();
 });
 
@@ -33,11 +32,13 @@ tape('madlib reset() function sets currentMadLib object', function(t) {
 
 tape('testing fillBlank function if part of speech is correct', function(t) {
     madlibber.currentMadLibSetter(testMadlibObj);
-    var actual = madlibber.fillBlank('table');
-    t.equal(actual, '', 'if userBlanks length is less than required, it returns an empty string');
+    var responseObject = madlibber.fillBlank('table');
+    t.equal(responseObject.data, '');
+    t.equal(responseObject.completed, false);
+    t.ok(responseObject.partOfSpeech.length > 0, 'if userBlanks length is less than required, it returns next part of speech required');
 
     madlibber.userBlanksSetter(['table', 'chair', 'house']);
     madlibber.currentMadLibSetter(testMadlibObj);
-    t.equal(madlibber.fillBlank('going'), 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.', 'if userBlanks is the same length as required, returns a sentence');
+    t.equal(madlibber.fillBlank('going').data, 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.', 'if userBlanks is the same length as required, returns a sentence');
     t.end();
 });

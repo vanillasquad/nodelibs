@@ -6,5 +6,6 @@ tape('checks that different handlers exist as functions in exported object', fun
     t.equal(typeof handlers.autocompleteHandler, 'function', 'autocompleteHandler test');
     t.equal(typeof handlers.submitHandler, 'function', 'submitHandler test');
     t.equal(typeof handlers.notFoundHandler, 'function', 'notFoundHandler test');
+    t.equal(typeof handlers.startHandler, 'function', 'startHandler test');
     t.end();
 });
