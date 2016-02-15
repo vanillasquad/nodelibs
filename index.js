@@ -1,3 +1,19 @@
+var required;
+var displayRequired = document.getElementById('required');
+var requiredCounter = 0;
+
+document.getElementById('start').addEventListener('click', function(e) {
+    var start = new XMLHttpRequest();
+    start.addEventListener('load', function(evt) {
+        required = JSON.parse(evt.target.response);
+        requiredCounter = 0;
+        displayRequired.innerHTML = required[requiredCounter];
+        // console.log(required);
+    });
+    start.open('GET', 'http://localhost:8000/start-madlibber');
+    start.send();
+});
+
 document.getElementById('word-form').firstElementChild.addEventListener('input', function(e) {
     var options = {
         fragment: e.target.value,
@@ -36,5 +52,14 @@ function autofill(evt) {
 }
 
 document.getElementById('word-form').addEventListener('submit', function(e) {
-
+    e.preventDefault();
+    var submitWord = new XMLHttpRequest();
+    var word = e.target.firstElementChild.value;
+    console.log();
+    submitWord.addEventListener('load', function(evt) {
+        displayRequired.innerHTML = required[++requiredCounter];
+        console.log(evt.target.response);
+    });
+    submitWord.open('GET', 'http://localhost:8000/submit-word:' + word);
+    submitWord.send();
 });

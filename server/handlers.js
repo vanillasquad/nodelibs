@@ -17,6 +17,12 @@ function homeHandler(request, response) {
     });
 }
 
+function start(request, response) {
+    var required = madlibber.reset();
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    response.end(JSON.stringify(required));
+}
+
 function autocompleteHandler(request, response) {
     var queryString = request.url.split('?')[1];
     var rawParams = queryString.split('&');
@@ -73,6 +79,7 @@ function resourceHandler(request, response) {
 
 module.exports = {
     homeHandler: homeHandler,
+    start: start,
     autocompleteHandler: autocompleteHandler,
     submitHandler: submitHandler,
     notFoundHandler: notFoundHandler,
