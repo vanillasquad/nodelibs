@@ -1,5 +1,6 @@
 var tape = require('tape');
 var server = require('../server/server.js');
+var colors = require('colors');
 
 
 tape('server.js has function .init()',function(t){
@@ -75,6 +76,34 @@ tape('submitWord endpoint when total words are submitted returns a full sentence
         response.pipe(concat(function(payload){
             t.equal(payload.toString('utf8'), madlibber.testCompleteSentence, 'Client call to submit word with all words should return a sentence');
             t.end();
+        }));
+    });
+});
+
+tape('autocompleteHandler returns a list of words matching the beginning of the input', function(t) {
+    t.plan(10);
+    var wordType = 'adverbs';
+    var wordFragment = 'ab';
+    var randomise = false;
+    hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType + '&randomise=' + randomise, function(error, response) {
+        response.pipe(concat(function(payload) {
+            JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
+                t.ok(word.search(wordFragment) === 0, 'Assert ' + word + ' starts with ' + wordFragment);
+            });
+        }));
+    });
+});
+
+tape('autocompleteHandler should return a random list of words if randomise is set to true', function(t) {
+    t.plan(10);
+    var wordType = 'nouns';
+    var wordFragment = 'be';
+    var randomise = true;
+    hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType + '&randomise=' + randomise, function(error, response) {
+        response.pipe(concat(function(payload) {
+            JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
+                t.ok(word.search(wordFragment) === 0, 'Assert ' + word + 'starts with ' + wordFragment);
+            });
         }));
     });
 });

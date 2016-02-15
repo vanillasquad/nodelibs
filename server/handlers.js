@@ -16,8 +16,22 @@ function homeHandler(request, response) {
     });
 }
 
-function autocompleteHandler() {
-
+function autocompleteHandler(request, response) {
+    var queryString = request.url.split('?')[1];
+    var rawParams = queryString.split('&');
+    var queryParams = rawParams.reduce(function(prev, curr) {
+        var keyval = curr.split('=');
+        prev[keyval[0]] = keyval[1];
+        return prev;
+    }, {});
+    var randomise = (queryParams.randomise == 'true') ? true : false;
+    var dict = autocomplete.getDict(queryParams.type);
+    var matches = dict.findMatches(queryParams.fragment, 10, randomise);
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    var matchObject = {
+        "suggestions": matches
+    };
+    response.end(JSON.stringify(matchObject));
 }
 
 function submitHandler() {
