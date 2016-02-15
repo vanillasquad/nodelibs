@@ -15,20 +15,22 @@ function reset() {
 function fillBlank(word) {
     var required = currentMadLib.required;
     userBlanks.push(word);
+    //check if user has completed madlib
     if (userBlanks.length === required.length){
         return generateSentence(userBlanks, currentMadLib.sentences);
     } else {
+        //else if madlib is incomplete
         return "";
     }
 }
 
-function generateSentence(userBlanks, fragments){
+function generateSentence(userBlanks, sentences){
     var completed = '';
-    fragments.forEach(fragment => {
-        if (typeof fragment === 'string') {
-            completed += fragment;
+    sentences.forEach(sentenceFragment => {
+        if (typeof sentenceFragment === 'string') {
+            completed += sentenceFragment;
         } else {
-            completed += userBlanks[fragment];
+            completed += userBlanks[sentenceFragment];
         }
     });
     return completed;

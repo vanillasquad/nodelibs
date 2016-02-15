@@ -25,7 +25,7 @@ function submitHandler() {
 }
 
 function madlibHandler(request, response) {
-    var word = request.url.match(/:([\w]*)/i)[1]; //match returns an Array!!!
+    var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
     var blank = madlibber.fillBlank(word);
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.end(blank);
