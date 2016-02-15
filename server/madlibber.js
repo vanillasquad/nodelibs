@@ -12,15 +12,19 @@ function reset() {
     return currentMadLib.required;
 }
 
-function fillBlank(word) {
+function fillBlank(word, partOfSpeech) {
     var required = currentMadLib.required;
-    userBlanks.push(word);
     //check if user has completed madlib
-    if (userBlanks.length === required.length){
-        return generateSentence(userBlanks, currentMadLib.sentences);
+    if (partOfSpeech === required[userBlanks.length]) {
+        userBlanks.push(word);
+        if (userBlanks.length === required.length){
+            return generateSentence(userBlanks, currentMadLib.sentences);
+        } else {
+            //else if madlib is incomplete
+            return "";
+        }
     } else {
-        //else if madlib is incomplete
-        return "";
+        return 'incorrect part of speech';
     }
 }
 
@@ -55,7 +59,7 @@ function userBlanksSetter(set) {
 
 var testMadlibObj = {
     "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
-    "required": ["exclamation","verb","noun", "adjective"],
+    "required": ["noun","verb","noun", "adjective"],
 };
 var testUserBlanksAlmostFull = ['table', 'chair', 'house'];
 var testCompleteSentence = 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.';

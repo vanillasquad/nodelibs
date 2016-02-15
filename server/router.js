@@ -8,7 +8,7 @@ function router(request, response) {
     } else if (resourceWhitelist.indexOf(request.url) > -1) {
         handler.resourceHandler(request, response);
     } else if (request.url.indexOf('submit-word') > -1) {
-        handler.madlibHandler(request, response);
+        handler.submitHandler(request, response);
     } else {
         handler.notFoundHandler(request, response);
     }
