@@ -16,31 +16,20 @@ function reset() {
     return getNextPartOfSpeech();
 }
 
-function fillBlank(word, partOfSpeech) {
-    var required = currentMadLib.required;
-    //check if user has completed madlib
-    console.log('word chosen: ' + word, 'part of speech from wordnik: ' + partOfSpeech, 'required part of speech: ' + required[userBlanks.length]);
-    if (partOfSpeech.indexOf(required[userBlanks.length]) > -1) {
-        userBlanks.push(word);
-        if (getNextPartOfSpeech()){
-            //if madlib is incomplete
-            return {
-                "verified": true,
-                "msg": '',
-                "data": getNextPartOfSpeech(),
-            };
-        } else {
-            return {
-                "verified": true,
-                "msg": '',
-                "data": generateSentence(userBlanks, currentMadLib.sentences),
-            };
-        }
+function fillBlank(word) {
+    userBlanks.push(word);
+    if (getNextPartOfSpeech()){
+        //if madlib is incomplete
+        return {
+            "verified": true,
+            "msg": '',
+            "data": getNextPartOfSpeech(),
+        };
     } else {
         return {
-            "verified": false,
-            "msg": 'Incorrect part of speech',
-            "data": "",
+            "verified": true,
+            "msg": '',
+            "data": generateSentence(userBlanks, currentMadLib.sentences),
         };
     }
 }
