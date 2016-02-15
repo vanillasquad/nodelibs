@@ -12,21 +12,17 @@ function reset() {
     return currentMadLib.required;
 }
 
-function fillBlank(word, partOfSpeech) {
+function fillBlank(word) {
     var required = currentMadLib.required;
-    //check if user has completed madlib
-    console.log('word chosen: ' + word, 'part of speech from wordnik: ' + partOfSpeech, 'required part of speech: ' + required[userBlanks.length]);
-    if (partOfSpeech.indexOf(required[userBlanks.length]) > -1) {
-        userBlanks.push(word);
-        if (userBlanks.length === required.length){
-            return generateSentence(userBlanks, currentMadLib.sentences);
-        } else {
-            //else if madlib is incomplete
-            return "";
-        }
+    //check if user has completed madlib    
+    userBlanks.push(word);
+    if (userBlanks.length === required.length){
+        return generateSentence(userBlanks, currentMadLib.sentences);
     } else {
-        return 'incorrect part of speech';
+        //else if madlib is incomplete
+        return "";
     }
+
 }
 
 function generateSentence(userBlanks, sentences){

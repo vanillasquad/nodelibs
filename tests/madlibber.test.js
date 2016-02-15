@@ -33,20 +33,11 @@ tape('madlib reset() function sets currentMadLib object', function(t) {
 
 tape('testing fillBlank function if part of speech is correct', function(t) {
     madlibber.currentMadLibSetter(testMadlibObj);
-    var actual = madlibber.fillBlank('table', 'noun');
+    var actual = madlibber.fillBlank('table');
     t.equal(actual, '', 'if userBlanks length is less than required, it returns an empty string');
 
     madlibber.userBlanksSetter(['table', 'chair', 'house']);
     madlibber.currentMadLibSetter(testMadlibObj);
-    t.equal(madlibber.fillBlank('going', 'adjective'), 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.', 'if userBlanks is the same length as required, returns a sentence');
-    t.end();
-});
-
-tape('madlibber recognises incorrect part of speech', function(t){
-    madlibber.currentMadLibSetter(testMadlibObj);
-    //testMadlibObj expects a noun, but we feed a verb
-    var actual = madlibber.fillBlank('eat','verb');
-    var expected = 'incorrect part of speech';
-    t.equal(actual, expected, 'madlibber handles an incorrect part of speech');
+    t.equal(madlibber.fillBlank('going'), 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.', 'if userBlanks is the same length as required, returns a sentence');
     t.end();
 });
