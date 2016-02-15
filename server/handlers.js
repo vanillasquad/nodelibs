@@ -5,6 +5,7 @@ var wordnik = require('./wordnik.js');
 var colors = require('colors');
 
 function homeHandler(request, response) {
+    madlibber.reset();
     response.writeHead(200, {'Content-Type': 'text/html'});
     fs.readFile(__dirname + '/../index.html', function(error, index) {
         if (error) {
@@ -42,6 +43,9 @@ function autocompleteHandler(request, response) {
 }
 
 function submitHandler(request, response) {
+    console.log('________AT BEGINNING OF SUBMIT___________');
+    console.log('userBlanks is: ' + madlibber.userBlanks);
+    console.log('Required words are: ' + madlibber.currentMadLib);
     var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
 
     var errorCallback = function(){
