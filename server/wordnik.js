@@ -1,6 +1,8 @@
 var http = require('http');
+var env = require('env2')('./config.env');
 var colors = require('colors');
-var apiKey = '6f0769a691184a5fb49050d636602a5788f5a7c3a89e3e68c';
+
+var apiKey = process.env.API_KEY;
 
 function checkWord(word, errorCallback, successCallback) {
     console.log('check word fired......');
