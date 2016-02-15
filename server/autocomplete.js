@@ -33,7 +33,7 @@ var findMatches = function(wordFragment, numberWordsReturned, randomise) {
     if (randomise) {
         // returns random 10 words from matches starting with wordFragment
         var randomMatches = [];
-        while (randomMatches.length < numberWordsReturned) {
+        while (randomMatches.length < Math.min(numberWordsReturned, matches.length)) {
             var randomNum = Math.floor(Math.random() * matches.length);
             randomMatches.push(this.words.splice(randomNum, 1));
         }

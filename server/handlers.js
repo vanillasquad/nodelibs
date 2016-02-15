@@ -17,7 +17,7 @@ function homeHandler(request, response) {
 }
 
 function autocompleteHandler() {
-
+    
 }
 
 function submitHandler() {

@@ -79,6 +79,18 @@ tape('submitWord endpoint when total words are submitted returns a full sentence
     });
 });
 
+tape('autocompleteHandler returns a list of words matching the beginning of the input', function(t) {
+    var wordType = 'adverbs';
+    var wordFragment = 'ab';
+    hyperquest.get('http://localhost:8000/auto?fragment=' + wordFragment + '&type=' + wordType, function(error, response) {
+        response.pipe(concat(function(payload) {
+            JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
+                t.ok(word.search(wordFragment) === 0, 'Assert ' + word + ' starts with ' + wordFragment);
+            });
+        }));
+    });
+});
+
 // check content of autocomplete, submitHandler
 tape.onFinish(function() {
     app.server.close();
