@@ -33,3 +33,4 @@ The project will also be deployed to Heroku.
 
 * Check part of speech from Wordnik
 * Include other parts of speech as suggested by Wordnik
+* Check the correct verb type is entered from Wordnik

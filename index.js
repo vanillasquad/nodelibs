@@ -6,6 +6,7 @@ var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
     document.getElementById('madlib').classList.add('hidden');
+    document.querySelector('.form-container').classList.remove('hidden');
     errorMessage.innerHTML = '';
     madlib.innerHTML = '';
     var start = new XMLHttpRequest();
@@ -89,22 +90,26 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
-            document.querySelector('.form').classList.add('hidden');
-            document.querySelector('.form').classList.add('invisible');
-            document.getElementById('start').classList.remove('hidden');
-            document.getElementById('start').classList.remove('invisible');
-            document.getElementById('madlib').classList.remove('hidden');
             showLoadScreen();
-            errorMessage.innerHTML = '';
-            container.innerHTML = '';
-            madlib.innerHTML = response.data;
-            displayRequired.innerHTML = '';
+            setTimeout(function() {
+                document.querySelector('.form').classList.add('hidden');
+                document.querySelector('.form').classList.add('invisible');
+                document.getElementById('start').classList.remove('hidden');
+                document.getElementById('start').classList.remove('invisible');
+                document.getElementById('madlib').classList.remove('hidden');
+                document.querySelector('.form-container').classList.add('hidden');
+                errorMessage.innerHTML = '';
+                // container.innerHTML = '';
+                madlib.innerHTML = response.data;
+                displayRequired.innerHTML = '';
+            }, 3000);
         } else {
             errorMessage.innerHTML = '';
-            container.innerHTML = '';
             displayRequired.innerHTML = response.nextHint;
             required = response.partOfSpeech;
         }
+        e.target.firstElementChild.value = '';
+        container.innerHTML = '';
 
     });
     submitWord.open('GET', '/submit-word:' + word);

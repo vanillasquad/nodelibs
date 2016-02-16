@@ -10,8 +10,8 @@ header {
     height: 12em;
 }
 
-h3 {
-    color: #fff;
+header h3 {
+    color: white;
     letter-spacing: -1px;
     font-size: 15px;
 }
@@ -33,7 +33,7 @@ main {
 }
 
 #start {
-    /* transition: opacity 0.1s ease; */
+     transition: opacity 0.1s ease;
     width: 80vw;
     height: 15vh;
     background-color: rgb(45, 80, 61);
@@ -102,6 +102,16 @@ input[type='text'] {
     /*can remove this once fixed no of words returned*/
 }
 
+#madlib {
+    width: 80vw;
+    margin: 0 auto;
+    font-size: 1.5em;
+    padding: 1.5em;
+    border: 3px #60A17E solid;
+    border-radius: 1em;
+    box-sizing: border-box;
+}
+
 .hidden {
     display:none;
 }
@@ -120,7 +130,7 @@ loading-screen-----*****/
 	height: 100%;
 	top: 0;
 	background-color: #74FF92;
-	transition: 0.3s ease;
+	transition: 0.3s ease-out;
 }
 
 .visible {
@@ -174,6 +184,10 @@ loading-screen-----*****/
 	left: 0;
 	right: 0;
 	text-align: center;
+}
+
+#madlib {
+    font-size: 1em;
 }
 
 @keyframes spin {
