@@ -3,7 +3,6 @@ var http = require('http');
 var apiKey = process.env.API_KEY;
 
 function checkWord(word, errorCallback, successCallback) {
-    console.log('check word fired......');
     var options = {
         hostname: 'api.wordnik.com',
         path: '/v4/word.json/'+ word + '/definitions?limit=1&includeRelated=true&useCanonical=false&includeTags=false&api_key=' + apiKey
