@@ -10,8 +10,8 @@ header {
     height: 12em;
 }
 
-h3 {
-    color: #fff;
+header h3 {
+    color: white;
     letter-spacing: -1px;
     font-size: 15px;
 }
@@ -33,7 +33,7 @@ main {
 }
 
 #start {
-    /* transition: opacity 0.1s ease; */
+     transition: opacity 0.1s ease;
     width: 80vw;
     height: 15vh;
     background-color: rgb(45, 80, 61);

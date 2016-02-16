@@ -21,7 +21,7 @@ document.getElementById('start').addEventListener('click', function(e) {
         required = response.partOfSpeech;
 
     });
-    start.open('GET', 'http://localhost:8000/start-madlibber');
+    start.open('GET', '/start-madlibber');
     start.send();
 });
 
@@ -37,7 +37,7 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
         }).join('&');
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8000/auto?' + queryString);
+        xhr.open('GET', '/auto?' + queryString);
         xhr.send();
 
         xhr.addEventListener('load', function(evt) {
@@ -98,11 +98,12 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
             displayRequired.innerHTML = '';
         } else {
             errorMessage.innerHTML = '';
-            container.innerHTML = '';
             displayRequired.innerHTML = response.nextHint;
             required = response.partOfSpeech;
         }
+        e.target.firstElementChild.value = '';
+        container.innerHTML = '';
     });
-    submitWord.open('GET', 'http://localhost:8000/submit-word:' + word);
+    submitWord.open('GET', '/submit-word:' + word);
     submitWord.send();
 });
