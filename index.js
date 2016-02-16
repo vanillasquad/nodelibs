@@ -15,7 +15,8 @@ document.getElementById('start').addEventListener('click', function(e) {
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
         document.getElementById('word-form').classList.toggle('invisible');
-        console.log(required);
+        document.getElementById('input-field').focus();
+
         var response = JSON.parse(evt.target.response);
         displayRequired.innerHTML = response.nextHint;
         required = response.partOfSpeech;
@@ -89,6 +90,8 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         var response = JSON.parse(evt.target.response);
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
+            document.getElementById('error-message').classList.remove('invisible');
+            document.getElementById('input-field').focus();
         } else if (response.completed) {
             showLoadScreen();
             setTimeout(function() {
@@ -98,15 +101,15 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
                 document.getElementById('start').classList.remove('invisible');
                 document.getElementById('madlib').classList.remove('hidden');
                 document.querySelector('.form-container').classList.add('hidden');
-                errorMessage.innerHTML = '';
-                // container.innerHTML = '';
+                document.getElementById('error-message').classList.add('invisible');
                 madlib.innerHTML = response.data;
                 displayRequired.innerHTML = '';
             }, 3000);
         } else {
-            errorMessage.innerHTML = '';
+            document.getElementById('error-message').classList.add('invisible');
             displayRequired.innerHTML = response.nextHint;
             required = response.partOfSpeech;
+            document.getElementById('input-field').focus();
         }
         e.target.firstElementChild.value = '';
         container.innerHTML = '';
