@@ -101,7 +101,7 @@ tape('submitHandler returns an error when input word does not exist', function(t
     hyperquest.get(hostUrl + submitWord, function(error, response) {
         response.pipe(concat(function(payload) {
             console.log(payload, payload.toString('utf8'));
-            t.equal(payload.toString('utf8'), 'wordnik error', 'Checks if word exists in wordnik');
+            t.equal(JSON.parse(payload).error, 'wordnik error', 'Checks if word exists in wordnik');
             t.end();
         }));
     });
