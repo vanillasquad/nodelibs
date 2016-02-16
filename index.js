@@ -10,12 +10,16 @@ document.getElementById('start').addEventListener('click', function(e) {
     var start = new XMLHttpRequest();
     e.target.classList.toggle('hidden');
     document.querySelector('.form').classList.toggle('hidden');
-
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
+        document.getElementById('word-form').classList.toggle('invisible');
+
+        console.log(required);
+
         var response = JSON.parse(evt.target.response);
         displayRequired.innerHTML = response.nextHint;
         required = response.partOfSpeech;
+
     });
     start.open('GET', 'http://localhost:8000/start-madlibber');
     start.send();
@@ -83,12 +87,15 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
-            document.querySelector('.form').classList.toggle('hidden');
-            document.getElementById('start').classList.toggle('hidden');
+            document.querySelector('.form').classList.add('hidden');
+            document.querySelector('.form').classList.add('invisible');
+            document.getElementById('start').classList.remove('hidden');
+            document.getElementById('start').classList.remove('invisible');
             showLoadScreen();
             errorMessage.innerHTML = '';
             container.innerHTML = '';
             madlib.innerHTML = response.data;
+            displayRequired.innerHTML = '';
         } else {
             errorMessage.innerHTML = '';
             container.innerHTML = '';
