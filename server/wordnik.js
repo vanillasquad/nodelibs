@@ -1,5 +1,5 @@
 var http = require('http');
-var env = require('env2')('./.env');
+var env = require('env2')('.env');
 var colors = require('colors');
 
 var apiKey = process.env.API_KEY;
