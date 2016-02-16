@@ -131,6 +131,6 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         container.innerHTML = '';
 
     });
-    submitWord.open('GET', '/submit-word?id='+Date.now().toString()+'&:' + word);
+    submitWord.open('GET', '/submit-word:' + word);
     submitWord.send();
 });

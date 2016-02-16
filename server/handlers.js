@@ -47,7 +47,6 @@ function autocompleteHandler(request, response) {
 }
 
 function submitHandler(request, response) {
-    console.log(request.url);
     var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
     if (word.length >= 1) {
         var errorCallback = function(){
