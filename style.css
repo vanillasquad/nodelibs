@@ -102,6 +102,16 @@ input[type='text'] {
     /*can remove this once fixed no of words returned*/
 }
 
+#madlib {
+    width: 80vw;
+    margin: 0 auto;
+    font-size: 1.5em;
+    padding: 1.5em;
+    border: 3px #60A17E solid;
+    border-radius: 1em;
+    box-sizing: border-box;
+}
+
 .hidden {
     display:none;
 }
