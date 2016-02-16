@@ -1,11 +1,12 @@
 var displayRequired = document.getElementById('required');
 var errorMessage = document.getElementById('error-message');
+var wordForm = document.getElementById('word-form');
 var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
     var start = new XMLHttpRequest();
-    this.classList.toggle('hidden');
+    e.target.classList.toggle('hidden');
     document.querySelector('.form').classList.toggle('hidden');
 
     // this.className = 'btn';
@@ -58,35 +59,37 @@ function autofill(evt) {
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    //
-    // function showLoadScreen() {
-    // 	var screenContainer = document.getElementById('loading-screen');
-    // 	screenContainer.classList.add('visible');
-    // 	screenContainer.classList.remove('invisible');
-    // 	setTimeout(function() {
-    // 		screenContainer.classList.add('invisible');
-    // 		screenContainer.classList.remove('visible');
-    // 	}, 3000);
-    // }
-    // showLoadScreen();
 
+    function showLoadScreen() {
+    	var screenContainer = document.getElementById('loading-screen');
+    	screenContainer.classList.add('visible');
+    	screenContainer.classList.remove('invisible');
+    	setTimeout(function() {
+    		screenContainer.classList.add('invisible');
+    		screenContainer.classList.remove('visible');
+    	}, 3000);
+    }
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
 
     submitWord.addEventListener('load', function(evt) {
+        var container = document.getElementById('suggestions');
+        wordForm.firstElementChild.value = '';
+
         var httpStatus = Math.floor(evt.target.status/100);
         var response = JSON.parse(evt.target.response);
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
+            showLoadScreen();
             errorMessage.innerHTML = '';
+            container.innerHTML = '';
             document.getElementById('madlib').innerHTML = response.data;
         } else {
             errorMessage.innerHTML = '';
+            container.innerHTML = '';
             displayRequired.innerHTML = response.nextHint;
             required = response.partOfSpeech;
-            var container = document.getElementById('suggestions');
-            container.innerHTML = '';
         }
     });
     submitWord.open('GET', 'http://localhost:8000/submit-word:' + word);
