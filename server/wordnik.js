@@ -1,5 +1,4 @@
 var http = require('http');
-var colors = require('colors');
 
 var apiKey = process.env.API_KEY;
 
