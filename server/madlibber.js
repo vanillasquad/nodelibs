@@ -46,9 +46,10 @@ function generateSentence(userBlanks, sentences){
             completed += userBlanks[sentenceFragment];
         }
     });
-    return completed;
+    return completed.replace(/\.\s(\w)/gi, function(match, p1) {
+        return '. ' + p1.toUpperCase();
+    });
 }
-
 
 // Getters are for testing purposes only
 function currentMadLibGetter (){

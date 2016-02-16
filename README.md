@@ -2,6 +2,8 @@
 
 [![HitCount](https://hitt.herokuapp.com/{username||org}/nodelibs.svg)](https://github.com/vanillasquad/nodelibs)
 
+![nodelibs-image](img/nodelib-logo-black.png)
+
 ## What?
 
 nodelibs is an app which is used to fill in madlibs templates. As the user types
