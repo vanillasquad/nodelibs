@@ -12,7 +12,7 @@ module.exports = {
         },
         {
             "sentences": [ "He touched the ", 0, " and ", 1, " the ", 2, ". 'Wow!' he said, this is ", 3, "."],
-            "required": ["noun","verb","noun", "adjective"],
+            "required": ["nouns","verbs","nouns", "adjectives"],
             "hints": ["Noun", "Verb (Past tense)", "Noun", "Adjective"]
         },
         {

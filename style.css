@@ -52,6 +52,10 @@ main {
     width: 80vw;
 }
 
+#error-message {
+    height: 20px;
+}
+
 .btn {
     margin:auto;
     display: block;
