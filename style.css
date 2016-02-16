@@ -130,7 +130,7 @@ loading-screen-----*****/
 	height: 100%;
 	top: 0;
 	background-color: #74FF92;
-	transition: 0.3s ease;
+	transition: 0.3s ease-out;
 }
 
 .visible {
@@ -184,6 +184,10 @@ loading-screen-----*****/
 	left: 0;
 	right: 0;
 	text-align: center;
+}
+
+#madlib {
+    font-size: 1em;
 }
 
 @keyframes spin {

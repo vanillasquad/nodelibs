@@ -5,6 +5,8 @@ var madlib = document.getElementById('madlib');
 var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
+    document.getElementById('madlib').classList.add('hidden');
+    document.querySelector('.form-container').classList.remove('hidden');
     errorMessage.innerHTML = '';
     madlib.innerHTML = '';
     var start = new XMLHttpRequest();
@@ -13,13 +15,10 @@ document.getElementById('start').addEventListener('click', function(e) {
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
         document.getElementById('word-form').classList.toggle('invisible');
-
         console.log(required);
-
         var response = JSON.parse(evt.target.response);
         displayRequired.innerHTML = response.nextHint;
         required = response.partOfSpeech;
-
     });
     start.open('GET', '/start-madlibber');
     start.send();
@@ -60,11 +59,14 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
 
 function autofill(evt) {
     document.getElementById('word-form').firstElementChild.value = evt.target.innerHTML;
+    document.getElementById('suggestions').innerHTML = '';
+    document.getElementById('submit-btn').click();
+
 }
+
 
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
-
 
     function showLoadScreen() {
     	var screenContainer = document.getElementById('loading-screen');
@@ -75,6 +77,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
     		screenContainer.classList.remove('visible');
     	}, 3000);
     }
+
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
 
@@ -87,15 +90,19 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
-            document.querySelector('.form').classList.add('hidden');
-            document.querySelector('.form').classList.add('invisible');
-            document.getElementById('start').classList.remove('hidden');
-            document.getElementById('start').classList.remove('invisible');
             showLoadScreen();
-            errorMessage.innerHTML = '';
-            container.innerHTML = '';
-            madlib.innerHTML = response.data;
-            displayRequired.innerHTML = '';
+            setTimeout(function() {
+                document.querySelector('.form').classList.add('hidden');
+                document.querySelector('.form').classList.add('invisible');
+                document.getElementById('start').classList.remove('hidden');
+                document.getElementById('start').classList.remove('invisible');
+                document.getElementById('madlib').classList.remove('hidden');
+                document.querySelector('.form-container').classList.add('hidden');
+                errorMessage.innerHTML = '';
+                // container.innerHTML = '';
+                madlib.innerHTML = response.data;
+                displayRequired.innerHTML = '';
+            }, 3000);
         } else {
             errorMessage.innerHTML = '';
             displayRequired.innerHTML = response.nextHint;
@@ -103,6 +110,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         }
         e.target.firstElementChild.value = '';
         container.innerHTML = '';
+
     });
     submitWord.open('GET', '/submit-word:' + word);
     submitWord.send();
