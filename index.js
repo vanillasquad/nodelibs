@@ -1,16 +1,19 @@
 var displayRequired = document.getElementById('required');
 var errorMessage = document.getElementById('error-message');
+var wordForm = document.getElementById('word-form');
+var madlib = document.getElementById('madlib');
 var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
+    madlib.innerHTML = '';
     var start = new XMLHttpRequest();
-    this.classList.toggle('hidden');
-    document.getElementById('word-form').classList.toggle('hidden');
+    e.target.classList.toggle('hidden');
+    document.querySelector('.form').classList.toggle('hidden');
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
-
         document.getElementById('word-form').classList.toggle('invisible');
+
         console.log(required);
 
         var response = JSON.parse(evt.target.response);
@@ -62,36 +65,43 @@ function autofill(evt) {
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    //
-    // function showLoadScreen() {
-    // 	var screenContainer = document.getElementById('loading-screen');
-    // 	screenContainer.classList.add('visible');
-    // 	screenContainer.classList.remove('invisible');
-    // 	setTimeout(function() {
-    // 		screenContainer.classList.add('invisible');
-    // 		screenContainer.classList.remove('visible');
-    // 	}, 3000);
-    // }
-    // showLoadScreen();
 
+    function showLoadScreen() {
+    	var screenContainer = document.getElementById('loading-screen');
+    	screenContainer.classList.add('visible');
+    	screenContainer.classList.remove('invisible');
+    	setTimeout(function() {
+    		screenContainer.classList.add('invisible');
+    		screenContainer.classList.remove('visible');
+    	}, 3000);
+    }
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
 
     submitWord.addEventListener('load', function(evt) {
+        var container = document.getElementById('suggestions');
+        wordForm.firstElementChild.value = '';
+
         var httpStatus = Math.floor(evt.target.status/100);
         var response = JSON.parse(evt.target.response);
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
+            document.querySelector('.form').classList.add('hidden');
+            document.querySelector('.form').classList.add('invisible');
+            document.getElementById('start').classList.remove('hidden');
+            document.getElementById('start').classList.remove('invisible');
+            showLoadScreen();
             errorMessage.innerHTML = '';
-            document.getElementById('madlib').innerHTML = response.data;
+            container.innerHTML = '';
+            madlib.innerHTML = response.data;
+            displayRequired.innerHTML = '';
         } else {
-            e.target.firstElementChild.value = '';
+            errorMessage.innerHTML = '';
             displayRequired.innerHTML = response.nextHint;
             required = response.partOfSpeech;
         }
         e.target.firstElementChild.value = '';
-        var container = document.getElementById('suggestions');
         container.innerHTML = '';
     });
     submitWord.open('GET', '/submit-word:' + word);

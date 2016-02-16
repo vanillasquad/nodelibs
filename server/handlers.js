@@ -2,7 +2,6 @@ var fs = require('fs');
 var autocomplete = require('./autocomplete.js');
 var madlibber = require('./madlibber.js');
 var wordnik = require('./wordnik.js');
-var colors = require('colors');
 
 function homeHandler(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});

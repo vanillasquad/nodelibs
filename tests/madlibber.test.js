@@ -10,7 +10,9 @@ var testUserBlanksFull = ['table', 'chair', 'house', 'going'];
 
 tape('madlib contains reset() function that returns the next part of speech', function(t) {
     var actual = madlibber.reset();
-    t.equal(typeof actual, 'string', 'reset returns a string');
+    t.equal(typeof actual, 'object', 'reset returns an object');
+    t.equal(typeof actual.hint, 'string', 'object contains hint string');
+    t.equal(typeof actual.partOfSpeech, 'string', 'object contains partOfSpeech string');
     t.end();
 });
 

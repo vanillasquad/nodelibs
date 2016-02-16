@@ -1,6 +1,4 @@
 var http = require('http');
-var env = require('env2')('./config.env');
-var colors = require('colors');
 
 var apiKey = process.env.API_KEY;
 
@@ -16,7 +14,6 @@ function checkWord(word, errorCallback, successCallback) {
             data += chunk;
         });
         apiResponse.on('end', function() {
-            console.log(data);
             data = JSON.parse(data);
             //if wordnik doesn't recognise the word
             if(data.length === 0){

@@ -21,7 +21,6 @@ function fillBlank(word) {
     userBlanks.push(word);
     if (getNextWordData('hints')){
         //if madlib is incomplete
-        console.log(getNextWordData('required'));
         return {
             "completed": false,
             "nextHint": getNextWordData('hints'),
