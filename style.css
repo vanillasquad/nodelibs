@@ -7,14 +7,15 @@
 header {
     background-color: #54B970;
     text-align: center;
-    height: 20vh;
+    height: 12em;
 }
 
 h3 {
-    color: white;
+    color: #fff;
     letter-spacing: -1px;
     font-size: 15px;
 }
+
 
 .logo {
     width: 70vw;
@@ -23,9 +24,14 @@ h3 {
     padding-bottom: 1.5vh;
 }
 
+main {
+    margin-top: 3em;
+}
+
 .show {
     display: block;
 }
+
 #start {
     /* transition: opacity 0.1s ease; */
     width: 80vw;
@@ -35,23 +41,34 @@ h3 {
     border: none;
     font-size: 25px;
     color: rgb(244, 237, 47);
-    margin-top: 20vh;
+    margin-top: 3em;
 
+}
+
+#required,
+#error-message {
+    color: #000;
+    margin: 0 auto;
+    width: 80vw;
 }
 
 .btn {
     margin:auto;
     display: block;
 }
+
 .form-container {
-    height: 40vh;
+    min-height: 10em;
 }
+
 #word-form {
     transition: opacity 0.3s ease;
 }
+
 form ul {
     list-style-type: none;
 }
+
 form li {
     margin-top: 5px;
 }
@@ -97,7 +114,7 @@ loading-screen-----*****/
     z-index: -1;
 }
 
-/*.loading-screen {
+.loading-screen {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -162,4 +179,10 @@ loading-screen-----*****/
 @keyframes spin {
 	0% {transform: rotate(0deg)}
 	100% {transform: rotate(360deg)}
-}*/
+}
+
+@media (max-width: 450px) {
+    header {
+        height: 130px;
+    }
+}
