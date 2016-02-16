@@ -2,33 +2,37 @@ var madlibs = require('../server/madlibs.js');
 var currentMadLib = {};
 var userBlanks = [];
 
-function getNextHint() {
-    return (userBlanks.length < currentMadLib.hints.length) ? currentMadLib.hints[userBlanks.length] : "";
+function getNextWordData(field) {
+    return (userBlanks.length < currentMadLib[field].length) ? currentMadLib[field][userBlanks.length] : "";
 }
 
 function reset() {
     // [0] at some point needs to be random
     var randomLib = Math.floor(Math.random() * madlibs.get.length);
     userBlanks = [];
-    // console.log(randomLib);
     currentMadLib = madlibs.get[randomLib];
-    // console.log(currentMadLib);
-    return getNextHint();
+    return {
+        "hint": getNextWordData('hints'),
+        "partOfSpeech": getNextWordData('required'),
+    };
 }
 
 function fillBlank(word) {
     userBlanks.push(word);
-    if (getNextHint()){
+    if (getNextWordData('hints')){
         //if madlib is incomplete
+        console.log(getNextWordData('required'));
         return {
             "completed": false,
-            "nextHint": getNextHint(),
+            "nextHint": getNextWordData('hints'),
+            "partOfSpeech": getNextWordData('required'),
             "data": "",
         };
     } else {
         return {
             "completed": true,
             "nextHint": "",
+            "partOfSpeech": "",
             "data": generateSentence(userBlanks, currentMadLib.sentences),
         };
     }
@@ -65,7 +69,7 @@ function userBlanksSetter(set) {
 
 var testMadlibObj = {
     "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
-    "required": ["noun","verb","noun", "adjective"],
+    "required": ["nouns","verbs","nouns", "adjectives"],
     "hints": ["noun (proper)","verb (past tense)","noun (any)", "adjective"],
 };
 var testUserBlanksAlmostFull = ['table', 'chair', 'house'];
