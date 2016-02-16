@@ -16,6 +16,7 @@ function checkWord(word, errorCallback, successCallback) {
             data += chunk;
         });
         apiResponse.on('end', function() {
+            console.log(data);
             data = JSON.parse(data);
             //if wordnik doesn't recognise the word
             if(data.length === 0){

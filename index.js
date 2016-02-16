@@ -1,18 +1,17 @@
-var required;
 var displayRequired = document.getElementById('required');
-var requiredCounter = 0;
+var errorMessage = document.getElementById('error-message');
 
 document.getElementById('start').addEventListener('click', function(e) {
+    errorMessage.innerHTML = '';
     var start = new XMLHttpRequest();
     this.classList.toggle('hidden');
     document.querySelector('.form').classList.toggle('hidden');
 
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
-        required = JSON.parse(evt.target.response);
+        console.log(required);
         requiredCounter = 0;
-        displayRequired.innerHTML = required[requiredCounter];
-        // console.log(required);
+        displayRequired.innerHTML = JSON.parse(evt.target.response).nextHint;
     });
     start.open('GET', 'http://localhost:8000/start-madlibber');
     start.send();
@@ -58,7 +57,7 @@ function autofill(evt) {
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // 
+    //
     // function showLoadScreen() {
     // 	var screenContainer = document.getElementById('loading-screen');
     // 	screenContainer.classList.add('visible');
@@ -70,12 +69,20 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
     // }
     // showLoadScreen();
 
-
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
+
     submitWord.addEventListener('load', function(evt) {
-        displayRequired.innerHTML = required[++requiredCounter];
-        console.log(evt.target.response);
+        var errorStatus = Math.floor(evt.target.status/100);
+        if (errorStatus === 4 || errorStatus === 5) {
+            console.log(evt.target);
+            errorMessage.innerHTML = JSON.parse(evt.target.response).error;
+        } else {
+            errorMessage.innerHTML = '';
+            displayRequired.innerHTML = JSON.parse(evt.target.response).nextHint;
+            var container = document.getElementById('suggestions');
+            container.innerHTML = '';
+        }
     });
     submitWord.open('GET', 'http://localhost:8000/submit-word:' + word);
     submitWord.send();
