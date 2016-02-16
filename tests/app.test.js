@@ -35,8 +35,8 @@ tape('request to homepage returns HTML', function(t) {
 });
 
 tape('request returns style.css', function(t) {
-    t.plan(3);
-    ['index.html', 'index.js', 'style.css'].forEach(function(item) {
+    t.plan(4);
+    ['index.html', 'index.js', 'style.css', 'img/node-face-1.png'].forEach(function(item) {
         hyperquest.get(hostUrl + item, function(error, response) {
             response.pipe(concat(function(payload) {
                 fs.readFile(__dirname + '/../' + item, function(error, content) {
@@ -81,9 +81,20 @@ tape('submitWord endpoint calls madlibber file and returns string', function(t){
     });
 });
 
+tape('submitWord endpoint returns an error object when no word is provided', function(t){
+    var submitWord = 'submit-word:';
+    madlibber.currentMadLibSetter(madlibber.testMadlibObj);
+    hyperquest.get(hostUrl + submitWord, function(error, response){
+        response.pipe(concat(function(payload){
+            var responseObject = JSON.parse(payload);
+            t.equal(responseObject.error, 'Input field left blank' ,'should return correct error message');
+            t.end();
+        }));
+    });
+});
+
 tape('submitWord endpoint when total words are submitted returns a full sentence', function(t){
     var submitWord = 'submit-word:pretty';
-    // madlibber.reset();
     madlibber.userBlanksSetter(madlibber.testUserBlanksAlmostFull);
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get(hostUrl + submitWord, function(error, response){
@@ -105,11 +116,12 @@ tape('submitHandler returns an error when input word does not exist', function(t
 });
 
 tape('autocompleteHandler returns a list of words matching the beginning of the input', function(t) {
-    t.plan(10);
     var wordType = 'adverbs';
     var wordFragment = 'ab';
     var randomise = false;
-    hyperquest.get(hostUrl + 'auto?fragment=' + wordFragment + '&type=' + wordType + '&randomise=' + randomise, function(error, response) {
+    var number = 4;
+    t.plan(number);
+    hyperquest.get(hostUrl + 'auto?fragment=' + wordFragment + '&type=' + wordType + '&randomise=' + randomise + '&number=' + number, function(error, response) {
         response.pipe(concat(function(payload) {
             JSON.parse(payload.toString('utf8')).suggestions.forEach(function(word) {
                 t.ok(word.search(wordFragment) === 0, 'Assert ' + word + ' starts with ' + wordFragment);
