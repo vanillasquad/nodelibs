@@ -5,6 +5,7 @@ var madlib = document.getElementById('madlib');
 var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
+    document.getElementById('madlib').classList.add('hidden');
     errorMessage.innerHTML = '';
     madlib.innerHTML = '';
     var start = new XMLHttpRequest();
@@ -13,15 +14,12 @@ document.getElementById('start').addEventListener('click', function(e) {
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
         document.getElementById('word-form').classList.toggle('invisible');
-
         console.log(required);
-
         var response = JSON.parse(evt.target.response);
         displayRequired.innerHTML = response.nextHint;
         required = response.partOfSpeech;
-
     });
-    start.open('GET', 'http://localhost:8000/start-madlibber');
+    start.open('GET', '/start-madlibber');
     start.send();
 });
 
@@ -37,7 +35,7 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
         }).join('&');
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8000/auto?' + queryString);
+        xhr.open('GET', '/auto?' + queryString);
         xhr.send();
 
         xhr.addEventListener('load', function(evt) {
@@ -61,11 +59,13 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
 function autofill(evt) {
     document.getElementById('word-form').firstElementChild.value = evt.target.innerHTML;
     document.getElementById('suggestions').innerHTML = '';
+    document.getElementById('submit-btn').click();
+
 }
+
 
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
-
 
     function showLoadScreen() {
     	var screenContainer = document.getElementById('loading-screen');
@@ -76,6 +76,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
     		screenContainer.classList.remove('visible');
     	}, 3000);
     }
+
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
 
@@ -92,6 +93,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
             document.querySelector('.form').classList.add('invisible');
             document.getElementById('start').classList.remove('hidden');
             document.getElementById('start').classList.remove('invisible');
+            document.getElementById('madlib').classList.remove('hidden');
             showLoadScreen();
             errorMessage.innerHTML = '';
             container.innerHTML = '';
@@ -103,7 +105,8 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
             displayRequired.innerHTML = response.nextHint;
             required = response.partOfSpeech;
         }
+
     });
-    submitWord.open('GET', 'http://localhost:8000/submit-word:' + word);
+    submitWord.open('GET', '/submit-word:' + word);
     submitWord.send();
 });
