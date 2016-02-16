@@ -3,6 +3,16 @@ var autocomplete = require('./autocomplete.js');
 var madlibber = require('./madlibber.js');
 var wordnik = require('./wordnik.js');
 
+function parseQueryParams(url) {
+    var queryString = url.split('?')[1];
+    var rawParams = queryString.split('&');
+    return rawParams.reduce(function(prev, curr) {
+        var keyval = curr.split('=');
+        prev[keyval[0]] = keyval[1];
+        return prev;
+    }, {});
+}
+
 function homeHandler(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     fs.readFile(__dirname + '/../index.html', function(error, index) {
@@ -28,13 +38,7 @@ function startHandler(request, response) {
 }
 
 function autocompleteHandler(request, response) {
-    var queryString = request.url.split('?')[1];
-    var rawParams = queryString.split('&');
-    var queryParams = rawParams.reduce(function(prev, curr) {
-        var keyval = curr.split('=');
-        prev[keyval[0]] = keyval[1];
-        return prev;
-    }, {});
+    queryParams = parseQueryParams(request.url);
     var randomise = (queryParams.randomise == 'true') ? true : false;
     var num = (queryParams.number) ? parseInt(queryParams.number, 10) : 10;
     var dict = autocomplete.getDict(queryParams.type);
@@ -48,21 +52,22 @@ function autocompleteHandler(request, response) {
 
 function submitHandler(request, response) {
     console.log(request.url);
-    var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
-    if (word.length >= 1) {
+    queryParams = parseQueryParams(request.url);
+
+    if (queryParams.word && queryParams.word.length >= 1) {
         var errorCallback = function(){
             //Unsure of status code number!!!!!!!!!!!!!!!!!!!!!!!!
             response.writeHead(502, {'Content-Type': 'application/json'});
             response.end(JSON.stringify({
-                "error": word + " not recognised"
+                "error": queryParams.word + " not recognised"
             }));
         };
         var successCallback = function(){
-            var responseObject = madlibber.fillBlank(word);
+            var responseObject = madlibber.fillBlank(queryParams.word);
             response.writeHead(200, {'Content-Type': 'application/json'});
             response.end(JSON.stringify(responseObject));
         };
-        wordnik.checkWord(word, errorCallback, successCallback);
+        wordnik.checkWord(queryParams.word, errorCallback, successCallback);
     } else {
         response.writeHead(400, {'Content-Type': 'application/json'});
         response.end(JSON.stringify({
