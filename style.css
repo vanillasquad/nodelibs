@@ -10,7 +10,7 @@ header {
     height: 20vh;
 }
 
-h3 {
+header h3 {
     color: white;
     letter-spacing: -1px;
     font-size: 15px;
@@ -27,7 +27,7 @@ h3 {
     display: block;
 }
 #start {
-    /* transition: opacity 0.1s ease; */
+     transition: opacity 0.1s ease; 
     width: 80vw;
     height: 15vh;
     background-color: rgb(45, 80, 61);
