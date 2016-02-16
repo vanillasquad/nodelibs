@@ -5,6 +5,10 @@ var required;
 document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
     var start = new XMLHttpRequest();
+    this.classList.toggle('hidden');
+    document.querySelector('.form').classList.toggle('hidden');
+
+    // this.className = 'btn';
     start.addEventListener('load', function(evt) {
         var response = JSON.parse(evt.target.response);
         displayRequired.innerHTML = response.nextHint;
@@ -54,15 +58,16 @@ function autofill(evt) {
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    function showLoadScreen() {
-    	var screenContainer = document.getElementById('loading-screen');
-    	screenContainer.classList.add('visible');
-    	screenContainer.classList.remove('invisible');
-    	setTimeout(function() {
-    		screenContainer.classList.add('invisible');
-    		screenContainer.classList.remove('visible');
-    	}, 3000);
-    }
+    //
+    // function showLoadScreen() {
+    // 	var screenContainer = document.getElementById('loading-screen');
+    // 	screenContainer.classList.add('visible');
+    // 	screenContainer.classList.remove('invisible');
+    // 	setTimeout(function() {
+    // 		screenContainer.classList.add('invisible');
+    // 		screenContainer.classList.remove('visible');
+    // 	}, 3000);
+    // }
     // showLoadScreen();
 
     var submitWord = new XMLHttpRequest();
