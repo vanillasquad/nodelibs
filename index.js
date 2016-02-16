@@ -1,28 +1,55 @@
 var displayRequired = document.getElementById('required');
 var errorMessage = document.getElementById('error-message');
-var wordForm = document.getElementById('word-form');
 var madlib = document.getElementById('madlib');
 var required;
 
-document.getElementById('start').addEventListener('click', function(e) {
+function showAndHideLoadScreen() {
+    var screenContainer = document.getElementById('loading-screen');
+    screenContainer.classList.add('visible');
+    screenContainer.classList.remove('invisible');
+    setTimeout(function() {
+        screenContainer.classList.add('invisible');
+        screenContainer.classList.remove('visible');
+    }, 3000);
+}
+
+function hideStartView() {
     document.getElementById('madlib').classList.add('hidden');
+    document.getElementById('word-form').classList.toggle('hidden');
+    document.getElementById('start').classList.toggle('hidden');
     document.querySelector('.form-container').classList.remove('hidden');
-    errorMessage.innerHTML = '';
-    madlib.innerHTML = '';
-    var start = new XMLHttpRequest();
-    e.target.classList.toggle('hidden');
-    document.querySelector('.form').classList.toggle('hidden');
-    // this.className = 'btn';
-    start.addEventListener('load', function(evt) {
+}
+
+function setMadlibText(text) {
+    madlib.innerHTML = text;
+}
+
+function setMessageContainer(text) {
+    errorMessage.innerHTML = text;
+}
+
+function setRequiredHintText(text) {
+    displayRequired.innerHTML = text;
+}
+
+document.getElementById('start').addEventListener('click', function(e) {
+
+    hideStartView();
+    setMadlibText('');
+    setMessageContainer('');
+
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', function(evt) {
         document.getElementById('word-form').classList.toggle('invisible');
         document.getElementById('input-field').focus();
 
         var response = JSON.parse(evt.target.response);
-        displayRequired.innerHTML = response.nextHint;
+
+        setRequiredHintText(response.nextHint);
         required = response.partOfSpeech;
     });
-    start.open('GET', '/start-madlibber');
-    start.send();
+    xhr.open('GET', '/start-madlibber');
+    xhr.send();
 });
 
 document.getElementById('word-form').firstElementChild.addEventListener('input', function(e) {
@@ -31,7 +58,7 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
         type: required,
         randomise: 'true',
     };
-    if (options.fragment && options.fragment.length > 0) {
+    if (options.fragment.length > 0) {
         var queryString = Object.keys(options).map(function(key) {
             return key + '=' + options[key];
         }).join('&');
@@ -61,39 +88,28 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
 function autofill(evt) {
     document.getElementById('word-form').firstElementChild.value = evt.target.innerHTML;
     document.getElementById('suggestions').innerHTML = '';
-    // document.getElementById('submit-btn').click();
-
+    document.getElementById('submit-btn').click();
 }
 
 
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    function showLoadScreen() {
-    	var screenContainer = document.getElementById('loading-screen');
-    	screenContainer.classList.add('visible');
-    	screenContainer.classList.remove('invisible');
-    	setTimeout(function() {
-    		screenContainer.classList.add('invisible');
-    		screenContainer.classList.remove('visible');
-    	}, 3000);
-    }
-
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
 
     submitWord.addEventListener('load', function(evt) {
         var container = document.getElementById('suggestions');
-        wordForm.firstElementChild.value = '';
+        e.target.firstElementChild.value = '';
 
         var httpStatus = Math.floor(evt.target.status/100);
         var response = JSON.parse(evt.target.response);
         if (httpStatus === 4 || httpStatus === 5) {
-            errorMessage.innerHTML = response.error;
+            setMessageContainer(response.error);
             document.getElementById('error-message').classList.remove('invisible');
             document.getElementById('input-field').focus();
         } else if (response.completed) {
-            showLoadScreen();
+            showAndHideLoadScreen();
             setTimeout(function() {
                 document.querySelector('.form').classList.add('hidden');
                 document.querySelector('.form').classList.add('invisible');
@@ -102,12 +118,12 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
                 document.getElementById('madlib').classList.remove('hidden');
                 document.querySelector('.form-container').classList.add('hidden');
                 document.getElementById('error-message').classList.add('invisible');
-                madlib.innerHTML = response.data;
-                displayRequired.innerHTML = '';
+                setMadlibText(response.data);
+                setRequiredHintText('');
             }, 3000);
         } else {
             document.getElementById('error-message').classList.add('invisible');
-            displayRequired.innerHTML = response.nextHint;
+            setRequiredHintText(response.nextHint);
             required = response.partOfSpeech;
             document.getElementById('input-field').focus();
         }
