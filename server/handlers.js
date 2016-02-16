@@ -37,8 +37,9 @@ function autocompleteHandler(request, response) {
         return prev;
     }, {});
     var randomise = (queryParams.randomise == 'true') ? true : false;
+    var num = (queryParams.number) ? parseInt(queryParams.number, 10) : 10;
     var dict = autocomplete.getDict(queryParams.type);
-    var matches = dict.findMatches(queryParams.fragment, 10, randomise);
+    var matches = dict.findMatches(queryParams.fragment, num, randomise);
     response.writeHead(200, {'Content-Type': 'application/json'});
     var matchObject = {
         "suggestions": matches
@@ -48,18 +49,27 @@ function autocompleteHandler(request, response) {
 
 function submitHandler(request, response) {
     var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
-
-    var errorCallback = function(){
-        //Unsure of status code number!!!!!!!!!!!!!!!!!!!!!!!!
-        response.writeHead(200, {'Content-Type': 'text/html'});
-        response.end('wordnik error');
-    };
-    var successCallback = function(){
-        var responseObject = madlibber.fillBlank(word);
-        response.end(JSON.stringify(responseObject));
-    };
-
-    wordnik.checkWord(word, errorCallback, successCallback);
+    console.log(word);
+    if (word.length > 1) {
+        var errorCallback = function(){
+            //Unsure of status code number!!!!!!!!!!!!!!!!!!!!!!!!
+            response.writeHead(502, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({
+                "error": "wordnik error"
+            }));
+        };
+        var successCallback = function(){
+            var responseObject = madlibber.fillBlank(word);
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify(responseObject));
+        };
+        wordnik.checkWord(word, errorCallback, successCallback);
+    } else {
+        response.writeHead(400, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify({
+            "error": "Input field left blank"
+        }));
+    }
 }
 
 function notFoundHandler(request, response) {
