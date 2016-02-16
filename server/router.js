@@ -1,6 +1,6 @@
 var handler = require('./handlers.js');
 
-var resourceWhitelist = ['/index.html', '/index.js', '/style.css'];
+var resourceWhitelist = ['/index.html', '/index.js', '/style.css', '/img/nodelibs-logo.png', '/img/node-face.png'];
 
 function router(request, response) {
     if (request.url.length === 1) {

@@ -85,8 +85,10 @@ function resourceHandler(request, response) {
             response.end();
         } else {
             var ext = request.url.split('.')[1];
+            var contentType = 'text/';
             ext = (ext == 'js') ? 'javascript' : ext;
-            response.writeHead(200, {'Content-Type': 'text/' + ext});
+            contentType = (ext == 'png') ? 'image/' : 'text/';
+            response.writeHead(200, {'Content-Type': contentType + ext});
             response.end(content);
         }
     });
