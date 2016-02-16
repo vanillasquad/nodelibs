@@ -6,13 +6,17 @@ document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
     var start = new XMLHttpRequest();
     this.classList.toggle('hidden');
-    document.querySelector('.form').classList.toggle('hidden');
-
+    document.getElementById('word-form').classList.toggle('hidden');
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
+
+        document.getElementById('word-form').classList.toggle('invisible');
+        console.log(required);
+
         var response = JSON.parse(evt.target.response);
         displayRequired.innerHTML = response.nextHint;
         required = response.partOfSpeech;
+
     });
     start.open('GET', 'http://localhost:8000/start-madlibber');
     start.send();
