@@ -1,10 +1,12 @@
 var displayRequired = document.getElementById('required');
 var errorMessage = document.getElementById('error-message');
 var wordForm = document.getElementById('word-form');
+var madlib = document.getElementById('madlib');
 var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
+    madlib.innerHTML = '';
     var start = new XMLHttpRequest();
     e.target.classList.toggle('hidden');
     document.querySelector('.form').classList.toggle('hidden');
@@ -81,10 +83,12 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
+            document.querySelector('.form').classList.toggle('hidden');
+            document.getElementById('start').classList.toggle('hidden');
             showLoadScreen();
             errorMessage.innerHTML = '';
             container.innerHTML = '';
-            document.getElementById('madlib').innerHTML = response.data;
+            madlib.innerHTML = response.data;
         } else {
             errorMessage.innerHTML = '';
             container.innerHTML = '';
