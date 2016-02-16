@@ -13,7 +13,8 @@ function requiredPresent(payload) {
     var requiredWords = ['noun', 'verb', 'adjective'];
     return requiredWords.reduce(function(prev, curr) {
         var required = JSON.parse(payload).partOfSpeech;
-        return prev || (required.indexOf(curr) > -1);
+        var re = new RegExp(curr, 'i');
+        return prev || (required.match(re) > -1);
     }, false);
 }
 
@@ -61,6 +62,7 @@ tape('startHandler should return the first required word', function(t) {
     var requiredWords = ['noun', 'verb', 'adjective'];
     hyperquest.get(hostUrl + 'start-madlibber', function(error, response) {
         response.pipe(concat(function(payload) {
+            console.log(payload.toString('utf8'));
             t.ok(requiredPresent(payload), 'assert that startHandler returns required word');
             t.end();
         }));

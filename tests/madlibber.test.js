@@ -4,6 +4,7 @@ var madlibber = require('../server/madlibber.js');
 var testMadlibObj = {
     "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
     "required": ["noun","verb","noun", "adjective"],
+    "hints": ["noun (proper)","verb (past tense)","noun (any)", "adjective"],
 };
 var testUserBlanksFull = ['table', 'chair', 'house', 'going'];
 
