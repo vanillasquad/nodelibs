@@ -2,7 +2,7 @@
 
 [![HitCount](https://hitt.herokuapp.com/{username||org}/nodelibs.svg)](https://github.com/vanillasquad/nodelibs)
 
-![nodelibs-image](img/nodelibs-logo.png)
+![nodelibs-image](img/nodelib-logo-black.png)
 
 ## What?
 
