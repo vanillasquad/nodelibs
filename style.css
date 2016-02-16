@@ -7,7 +7,7 @@
 header {
     background-color: #54B970;
     text-align: center;
-    height: 20vh;
+    height: 12em;
 }
 
 h3 {
@@ -16,11 +16,16 @@ h3 {
     font-size: 15px;
 }
 
+
 .logo {
     width: 70vw;
     max-width: 500px;
     padding-top: 4vh;
     padding-bottom: 1.5vh;
+}
+
+main {
+    margin-top: 3em;
 }
 
 .show {
@@ -36,12 +41,15 @@ h3 {
     border: none;
     font-size: 25px;
     color: rgb(244, 237, 47);
-    margin-top: 20vh;
+    margin-top: 3em;
 
 }
 
-#required {
+#required,
+#error-message {
     color: #000;
+    margin: 0 auto;
+    width: 80vw;
 }
 
 .btn {
@@ -50,14 +58,17 @@ h3 {
 }
 
 .form-container {
-    height: 40vh;
+    min-height: 10em;
 }
+
 #word-form {
     transition: opacity 0.3s ease;
 }
+
 form ul {
     list-style-type: none;
 }
+
 form li {
     margin-top: 5px;
 }
@@ -168,4 +179,10 @@ loading-screen-----*****/
 @keyframes spin {
 	0% {transform: rotate(0deg)}
 	100% {transform: rotate(360deg)}
+}
+
+@media (max-width: 450px) {
+    header {
+        height: 130px;
+    }
 }
