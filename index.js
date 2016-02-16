@@ -1,13 +1,14 @@
 var displayRequired = document.getElementById('required');
 var errorMessage = document.getElementById('error-message');
+var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
     var start = new XMLHttpRequest();
     start.addEventListener('load', function(evt) {
-        console.log(required);
-        requiredCounter = 0;
-        displayRequired.innerHTML = JSON.parse(evt.target.response).nextHint;
+        var response = JSON.parse(evt.target.response);
+        displayRequired.innerHTML = response.nextHint;
+        required = response.partOfSpeech;
     });
     start.open('GET', 'http://localhost:8000/start-madlibber');
     start.send();
@@ -16,7 +17,7 @@ document.getElementById('start').addEventListener('click', function(e) {
 document.getElementById('word-form').firstElementChild.addEventListener('input', function(e) {
     var options = {
         fragment: e.target.value,
-        type: 'nouns',
+        type: required,
         randomise: 'true',
     };
     if (options.fragment && options.fragment.length > 0) {
@@ -53,7 +54,6 @@ function autofill(evt) {
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-
     function showLoadScreen() {
     	var screenContainer = document.getElementById('loading-screen');
     	screenContainer.classList.add('visible');
@@ -69,13 +69,16 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
     var word = e.target.firstElementChild.value;
 
     submitWord.addEventListener('load', function(evt) {
-        var errorStatus = Math.floor(evt.target.status/100);
-        if (errorStatus === 4 || errorStatus === 5) {
-            console.log(evt.target);
-            errorMessage.innerHTML = JSON.parse(evt.target.response).error;
+        var httpStatus = Math.floor(evt.target.status/100);
+        var response = JSON.parse(evt.target.response);
+        if (httpStatus === 4 || httpStatus === 5) {
+            errorMessage.innerHTML = response.error;
+        } else if (response.completed) {
+            document.getElementById('madlib').innerHTML = response.data;
         } else {
             errorMessage.innerHTML = '';
-            displayRequired.innerHTML = JSON.parse(evt.target.response).nextHint;
+            displayRequired.innerHTML = response.nextHint;
+            required = response.partOfSpeech;
             var container = document.getElementById('suggestions');
             container.innerHTML = '';
         }
