@@ -1,4 +1,4 @@
-var env = require('env2')('config.env');
+var env = require('env2')('./config.env');
 var server = require('./server.js');
 var router = require('./router.js');
 
