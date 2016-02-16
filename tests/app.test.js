@@ -4,7 +4,6 @@ var hyperquest = require('hyperquest');
 var concat = require('concat-stream');
 var app = require('../server/app.js');
 var fs = require('fs');
-var env = require('env2')('.env');
 var madlibber = require('../server/madlibber.js');
 
 var hostUrl = process.env.HOST + ':' + process.env.PORT + '/';
