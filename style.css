@@ -1,5 +1,6 @@
 body {
     font-family: PT Mono;
+	margin: 0;
 }
 
 
@@ -8,7 +9,7 @@ body {
 	width: 100%;
 	height: 100%;
 	top: 0;
-	background-color: #fff;
+	background-color: #74FF92;
 	transition: 0.3s ease;
 }
 
