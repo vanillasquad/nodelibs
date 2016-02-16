@@ -2,8 +2,34 @@
 
 [![HitCount](https://hitt.herokuapp.com/{username||org}/nodelibs.svg)](https://github.com/vanillasquad/nodelibs)
 
+## What?
 
-nodelibs is an app which is used to fill in madlibs templates. The user will be
-asked to input the first 3 letters of a noun, adjective, verb, etc. The app will
-then randomly get a word starting with the input to build the madlib text. After
-all the sections are filled in, the completed madlib will be shown on the screen.
+nodelibs is an app which is used to fill in madlibs templates. As the user types
+in the text box, word suggestions will be shown dynamically as more letters are
+input or deleted.
+
+When the user submits all the required words for the madlib, the completed
+madlib will be generated and shown to the user.
+
+
+## Why?
+
+To create a fun game which uses a dictionary API.
+
+## How?
+
+The server will be set up using node.js. The four different parts of speech we
+will focus on for filling in the madlibs are nouns, verbs, adverbs, and
+adjectives. These will be stored in and accessed from .txt files for the
+autocomplete feature. The [Wordnik API](http://developer.wordnik.com/) will be
+used to verify that the input from the user is a word.
+
+TDD will be practiced throughout creating the project, using tape. Istanbul will
+be used for checking test coverage.
+
+The project will also be deployed to Heroku.
+
+## Stretch Goals
+
+* Check part of speech from Wordnik
+* Include other parts of speech as suggested by Wordnik
