@@ -62,7 +62,6 @@ tape('startHandler should return the first required word', function(t) {
     var requiredWords = ['noun', 'verb', 'adjective'];
     hyperquest.get(hostUrl + 'start-madlibber', function(error, response) {
         response.pipe(concat(function(payload) {
-            console.log(payload.toString('utf8'));
             t.ok(requiredPresent(payload), 'assert that startHandler returns required word');
             t.end();
         }));
@@ -100,7 +99,6 @@ tape('submitHandler returns an error when input word does not exist', function(t
     var submitWord = 'submit-word:hewufjkhds';
     hyperquest.get(hostUrl + submitWord, function(error, response) {
         response.pipe(concat(function(payload) {
-            console.log(payload, payload.toString('utf8'));
             t.equal(JSON.parse(payload).error, 'wordnik error', 'Checks if word exists in wordnik');
             t.end();
         }));
