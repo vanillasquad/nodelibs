@@ -57,9 +57,22 @@ function autofill(evt) {
 
 document.getElementById('word-form').addEventListener('submit', function(e) {
     e.preventDefault();
+    
+
+    function showLoadScreen() {
+    	var screenContainer = document.getElementById('loading-screen');
+    	screenContainer.classList.add('visible');
+    	screenContainer.classList.remove('invisible');
+    	setTimeout(function() {
+    		screenContainer.classList.add('invisible');
+    		screenContainer.classList.remove('visible');
+    	}, 3000);
+    }
+    showLoadScreen();
+
+
     var submitWord = new XMLHttpRequest();
     var word = e.target.firstElementChild.value;
-    console.log();
     submitWord.addEventListener('load', function(evt) {
         displayRequired.innerHTML = required[++requiredCounter];
         console.log(evt.target.response);

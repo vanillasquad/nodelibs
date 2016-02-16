@@ -2,6 +2,10 @@ var madlibs = require('../server/madlibs.js');
 var currentMadLib = {};
 var userBlanks = [];
 
+function getNextHint() {
+    return (userBlanks.length < currentMadLib.hints.length) ? currentMadLib.hints[userBlanks.length] : "";
+}
+
 function reset() {
     // [0] at some point needs to be random
     var randomLib = Math.floor(Math.random() * madlibs.get.length);
@@ -9,20 +13,25 @@ function reset() {
     // console.log(randomLib);
     currentMadLib = madlibs.get[randomLib];
     // console.log(currentMadLib);
-    return currentMadLib.required;
+    return getNextHint();
 }
 
 function fillBlank(word) {
-    var required = currentMadLib.required;
-    //check if user has completed madlib    
     userBlanks.push(word);
-    if (userBlanks.length === required.length){
-        return generateSentence(userBlanks, currentMadLib.sentences);
+    if (getNextHint()){
+        //if madlib is incomplete
+        return {
+            "completed": false,
+            "nextHint": getNextHint(),
+            "data": "",
+        };
     } else {
-        //else if madlib is incomplete
-        return "";
+        return {
+            "completed": true,
+            "nextHint": "",
+            "data": generateSentence(userBlanks, currentMadLib.sentences),
+        };
     }
-
 }
 
 function generateSentence(userBlanks, sentences){
@@ -57,6 +66,7 @@ function userBlanksSetter(set) {
 var testMadlibObj = {
     "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
     "required": ["noun","verb","noun", "adjective"],
+    "hints": ["noun (proper)","verb (past tense)","noun (any)", "adjective"],
 };
 var testUserBlanksAlmostFull = ['table', 'chair', 'house'];
 var testCompleteSentence = 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.';

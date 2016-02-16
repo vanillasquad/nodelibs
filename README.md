@@ -1,5 +1,8 @@
 # nodelibs
 
+[![HitCount](https://hitt.herokuapp.com/{username||org}/nodelibs.svg)](https://github.com/vanillasquad/nodelibs)
+
+
 nodelibs is an app which is used to fill in madlibs templates. The user will be
 asked to input the first 3 letters of a noun, adjective, verb, etc. The app will
 then randomly get a word starting with the input to build the madlib text. After

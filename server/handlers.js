@@ -18,10 +18,14 @@ function homeHandler(request, response) {
     });
 }
 
-function start(request, response) {
-    var required = madlibber.reset();
+function startHandler(request, response) {
+    var hint = madlibber.reset();
     response.writeHead(200, {'Content-Type': 'application/json'});
-    response.end(JSON.stringify(required));
+    response.end(JSON.stringify({
+        "complete": false,
+        "nextHint": hint,
+        "data": "",
+    }));
 }
 
 function autocompleteHandler(request, response) {
@@ -51,8 +55,8 @@ function submitHandler(request, response) {
         response.end('wordnik error');
     };
     var successCallback = function(){
-        var blank = madlibber.fillBlank(word);
-        response.end(blank);
+        var responseObject = madlibber.fillBlank(word);
+        response.end(JSON.stringify(responseObject));
     };
 
     wordnik.checkWord(word, errorCallback, successCallback);
@@ -82,7 +86,7 @@ function resourceHandler(request, response) {
 
 module.exports = {
     homeHandler: homeHandler,
-    start: start,
+    startHandler: startHandler,
     autocompleteHandler: autocompleteHandler,
     submitHandler: submitHandler,
     notFoundHandler: notFoundHandler,
