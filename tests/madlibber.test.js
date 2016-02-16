@@ -36,7 +36,7 @@ tape('testing fillBlank function if part of speech is correct', function(t) {
     var responseObject = madlibber.fillBlank('table');
     t.equal(responseObject.data, '');
     t.equal(responseObject.completed, false);
-    t.ok(responseObject.partOfSpeech.length > 0, 'if userBlanks length is less than required, it returns next part of speech required');
+    t.ok(responseObject.nextHint.length > 0, 'if userBlanks length is less than required, it returns next part of speech required');
 
     madlibber.userBlanksSetter(['table', 'chair', 'house']);
     madlibber.currentMadLibSetter(testMadlibObj);

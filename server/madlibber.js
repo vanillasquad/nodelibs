@@ -22,13 +22,13 @@ function fillBlank(word) {
         //if madlib is incomplete
         return {
             "completed": false,
-            "partOfSpeech": getNextHint(),
+            "nextHint": getNextHint(),
             "data": "",
         };
     } else {
         return {
             "completed": true,
-            "partOfSpeech": "",
+            "nextHint": "",
             "data": generateSentence(userBlanks, currentMadLib.sentences),
         };
     }

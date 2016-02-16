@@ -12,7 +12,7 @@ var hostUrl = process.env.HOST + ':' + process.env.PORT + '/';
 function requiredPresent(payload) {
     var requiredWords = ['noun', 'verb', 'adjective'];
     return requiredWords.reduce(function(prev, curr) {
-        var required = JSON.parse(payload).partOfSpeech;
+        var required = JSON.parse(payload).nextHint;
         var re = new RegExp(curr, 'i');
         return prev || (required.match(re) > -1);
     }, false);
