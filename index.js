@@ -5,10 +5,10 @@ document.getElementById('start').addEventListener('click', function(e) {
     errorMessage.innerHTML = '';
     var start = new XMLHttpRequest();
     this.classList.toggle('hidden');
-    document.querySelector('.form').classList.toggle('hidden');
-
+    document.getElementById('word-form').classList.toggle('hidden');
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
+        document.getElementById('word-form').classList.toggle('invisible');
         console.log(required);
         requiredCounter = 0;
         displayRequired.innerHTML = JSON.parse(evt.target.response).nextHint;
