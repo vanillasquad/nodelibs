@@ -4,6 +4,7 @@ var madlibber = require('../server/madlibber.js');
 var testMadlibObj = {
     "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
     "required": ["noun","verb","noun", "adjective"],
+    "hints": ["noun (proper)","verb (past tense)","noun (any)", "adjective"],
 };
 var testUserBlanksFull = ['table', 'chair', 'house', 'going'];
 
@@ -35,7 +36,7 @@ tape('testing fillBlank function if part of speech is correct', function(t) {
     var responseObject = madlibber.fillBlank('table');
     t.equal(responseObject.data, '');
     t.equal(responseObject.completed, false);
-    t.ok(responseObject.partOfSpeech.length > 0, 'if userBlanks length is less than required, it returns next part of speech required');
+    t.ok(responseObject.nextHint.length > 0, 'if userBlanks length is less than required, it returns next part of speech required');
 
     madlibber.userBlanksSetter(['table', 'chair', 'house']);
     madlibber.currentMadLibSetter(testMadlibObj);

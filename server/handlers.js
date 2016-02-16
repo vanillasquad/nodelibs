@@ -19,11 +19,11 @@ function homeHandler(request, response) {
 }
 
 function startHandler(request, response) {
-    var required = madlibber.reset();
+    var hint = madlibber.reset();
     response.writeHead(200, {'Content-Type': 'application/json'});
     response.end(JSON.stringify({
         "complete": false,
-        "partOfSpeech": required,
+        "nextHint": hint,
         "data": "",
     }));
 }

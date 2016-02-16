@@ -2,8 +2,8 @@ var madlibs = require('../server/madlibs.js');
 var currentMadLib = {};
 var userBlanks = [];
 
-function getNextPartOfSpeech() {
-    return (userBlanks.length < currentMadLib.required.length) ? currentMadLib.required[userBlanks.length] : "";
+function getNextHint() {
+    return (userBlanks.length < currentMadLib.hints.length) ? currentMadLib.hints[userBlanks.length] : "";
 }
 
 function reset() {
@@ -13,22 +13,22 @@ function reset() {
     // console.log(randomLib);
     currentMadLib = madlibs.get[randomLib];
     // console.log(currentMadLib);
-    return getNextPartOfSpeech();
+    return getNextHint();
 }
 
 function fillBlank(word) {
     userBlanks.push(word);
-    if (getNextPartOfSpeech()){
+    if (getNextHint()){
         //if madlib is incomplete
         return {
             "completed": false,
-            "partOfSpeech": getNextPartOfSpeech(),
+            "nextHint": getNextHint(),
             "data": "",
         };
     } else {
         return {
             "completed": true,
-            "partOfSpeech": "",
+            "nextHint": "",
             "data": generateSentence(userBlanks, currentMadLib.sentences),
         };
     }
@@ -66,6 +66,7 @@ function userBlanksSetter(set) {
 var testMadlibObj = {
     "sentences": [ 0,"! he said ", 1 ," as he jumped into his convertible exclamation ",2," and drove off with his ", 3 ," wife." ],
     "required": ["noun","verb","noun", "adjective"],
+    "hints": ["noun (proper)","verb (past tense)","noun (any)", "adjective"],
 };
 var testUserBlanksAlmostFull = ['table', 'chair', 'house'];
 var testCompleteSentence = 'table! he said chair as he jumped into his convertible exclamation house and drove off with his going wife.';
