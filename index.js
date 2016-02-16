@@ -61,7 +61,7 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
 function autofill(evt) {
     document.getElementById('word-form').firstElementChild.value = evt.target.innerHTML;
     document.getElementById('suggestions').innerHTML = '';
-    document.getElementById('submit-btn').click();
+    // document.getElementById('submit-btn').click();
 
 }
 
