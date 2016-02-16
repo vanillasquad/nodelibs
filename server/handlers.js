@@ -5,7 +5,6 @@ var wordnik = require('./wordnik.js');
 var colors = require('colors');
 
 function homeHandler(request, response) {
-    madlibber.reset();
     response.writeHead(200, {'Content-Type': 'text/html'});
     fs.readFile(__dirname + '/../index.html', function(error, index) {
         if (error) {
@@ -19,11 +18,12 @@ function homeHandler(request, response) {
 }
 
 function startHandler(request, response) {
-    var hint = madlibber.reset();
+    var wordData = madlibber.reset();
     response.writeHead(200, {'Content-Type': 'application/json'});
     response.end(JSON.stringify({
         "complete": false,
-        "nextHint": hint,
+        "nextHint": wordData.hint,
+        "partOfSpeech": wordData.partOfSpeech,
         "data": "",
     }));
 }
@@ -49,7 +49,6 @@ function autocompleteHandler(request, response) {
 
 function submitHandler(request, response) {
     var word = request.url.match(/:([\w]*)/i)[1]; //matches the submitted word
-    console.log(word);
     if (word.length > 1) {
         var errorCallback = function(){
             //Unsure of status code number!!!!!!!!!!!!!!!!!!!!!!!!
