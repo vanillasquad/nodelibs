@@ -79,6 +79,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
         } else if (response.completed) {
+            errorMessage.innerHTML = '';
             document.getElementById('madlib').innerHTML = response.data;
         } else {
             errorMessage.innerHTML = '';
