@@ -64,8 +64,6 @@ wordForm.firstElementChild.addEventListener('input', function(e) {
 function autofill(evt) {
     wordForm.firstElementChild.value = evt.target.innerHTML;
     document.getElementById('suggestions').innerHTML = '';
-    document.getElementById('submit-btn').click();
-
 }
 
 
