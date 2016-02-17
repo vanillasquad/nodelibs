@@ -4,7 +4,10 @@
 
 ![nodelibs-image](img/nodelib-logo-black.png)
 
+
 ## What?
+
+Try out [nodelibs for yourself!](https://hidden-wildwood-59018.herokuapp.com/)
 
 nodelibs is an app which is used to fill in madlibs templates. As the user types
 in the text box, word suggestions will be shown dynamically as more letters are
@@ -36,3 +39,5 @@ The project will also be deployed to Heroku.
 * Check part of speech from Wordnik
 * Include other parts of speech as suggested by Wordnik
 * Check the correct verb type is entered from Wordnik
+* Add validated words to the dictionary
+* Suggest proper word forms eg. plural nouns, past tense verbs, etc
