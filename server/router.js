@@ -7,11 +7,11 @@ function router(request, response) {
         handler.homeHandler(request,response);
     } else if (resourceWhitelist.indexOf(request.url) > -1) {
         handler.resourceHandler(request, response);
-    } else if (request.url.indexOf('submit-word') > -1) {
+    } else if (request.url.search('/submit-word') === 0) {
         handler.submitHandler(request, response);
     } else if (request.url.search('/auto') === 0) {
         handler.autocompleteHandler(request, response);
-    } else if (request.url.indexOf('start-madlibber') > -1){
+    } else if (request.url.indexOf('/start-madlibber') === 0){
         handler.startHandler(request, response);
     } else {
         handler.notFoundHandler(request, response);
