@@ -16,11 +16,9 @@ function checkWord(word, errorCallback, successCallback) {
             data = JSON.parse(data);
             //if wordnik doesn't recognise the word
             if(data.length === 0){
-                console.log('calling error callback');
                 return errorCallback() ;
             }
             else {
-                console.log('calling success callback');
                 return successCallback(data[0].partOfSpeech);
             // callback function will take the type of word as arg
             }

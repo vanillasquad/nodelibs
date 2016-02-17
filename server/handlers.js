@@ -51,7 +51,6 @@ function autocompleteHandler(request, response) {
 }
 
 function submitHandler(request, response) {
-    console.log(request.url);
     queryParams = parseQueryParams(request.url);
 
     if (queryParams.word && queryParams.word.length >= 1) {
