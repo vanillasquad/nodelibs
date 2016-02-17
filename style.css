@@ -85,7 +85,9 @@ form li {
 
 input[type='text'] {
     font-size: 1.2em;
-    width: 80vw;
+	width: 76vw;
+    padding: 0.5em 1em;
+	outline: none;
 }
 #submit-btn {
     background-color: #16603E;

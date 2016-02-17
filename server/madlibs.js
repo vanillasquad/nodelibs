@@ -24,6 +24,11 @@ module.exports = {
             "sentences": ["Elias was ", 0, " at his house. He was ", 1, " about this, because he really wanted to be ", 2, " instead. He said to his pet ", 3, ", while stroking it ", 4, ", 'Perhaps next weekend!'"],
             "required": ["verbs", "adjectives", "verbs", "nouns", "adverbs"],
             "hints": ["Verb (Present participle -ing)", "Adjective (feeling)", "Verb (Present participle -ing)", "Noun (animal)", "Adverb"]
+        },
+		{
+            "sentences": ["Katherine was ", 0, " working on her ", 1, " when suddenly the window blew open and a ", 2, " ", 3, " burst into the room! Enraged she turned round and exclaimed '", 4, "! I know where you keep your ", 5, "!'"],
+            "required": ["adverbs", "nouns", "adjectives", "nouns", "nouns", "nouns"],
+            "hints": ["Adverb", "Noun", "Adjective", "Noun", "Noun (plural)", "Noun (plural, part of the body)"]
         }
     ]
 };

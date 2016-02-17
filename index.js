@@ -18,7 +18,10 @@ document.getElementById('start').addEventListener('click', function(e) {
         document.getElementById('input-field').focus();
 
         var response = JSON.parse(evt.target.response);
-        displayRequired.innerHTML = response.nextHint;
+		var nextHint = response.nextHint;
+		var chooseMessage = '';
+		(nextHint[0] === 'A') ? chooseMessage = 'Choose an ' : chooseMessage = 'Choose a ';
+	    displayRequired.innerHTML = chooseMessage + nextHint;
         required = response.partOfSpeech;
     });
     start.open('GET', '/start-madlibber');
@@ -102,12 +105,16 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
                 document.getElementById('madlib').classList.remove('hidden');
                 document.querySelector('.form-container').classList.add('hidden');
                 document.getElementById('error-message').classList.add('invisible');
+				document.getElementById('start').innerHTML = 'Generate annother madlib';
                 madlib.innerHTML = response.data;
                 displayRequired.innerHTML = '';
             }, 3000);
         } else {
             document.getElementById('error-message').classList.add('invisible');
-            displayRequired.innerHTML = response.nextHint;
+			var nextHint = response.nextHint;
+			var chooseMessage = '';
+			(nextHint[0] === 'A') ? chooseMessage = 'Choose an ' : chooseMessage = 'Choose a ';
+		    displayRequired.innerHTML = chooseMessage + nextHint;
             required = response.partOfSpeech;
             document.getElementById('input-field').focus();
         }
