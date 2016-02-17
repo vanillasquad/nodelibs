@@ -115,6 +115,6 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         container.innerHTML = '';
 
     });
-    submitWord.open('GET', '/submit-word:' + word);
+    submitWord.open('GET', '/submit-word?word=' + word);
     submitWord.send();
 });
