@@ -68,7 +68,7 @@ tape('startHandler should return the first required word', function(t) {
 });
 
 tape('submitWord endpoint calls madlibber file and returns string', function(t){
-    var submitWord = 'submit-word:table';
+    var submitWord = 'submit-word?word=table';
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get(hostUrl + submitWord, function(error, response){
         response.pipe(concat(function(payload){
@@ -82,7 +82,7 @@ tape('submitWord endpoint calls madlibber file and returns string', function(t){
 });
 
 tape('submitWord endpoint returns an error object when no word is provided', function(t){
-    var submitWord = 'submit-word:';
+    var submitWord = 'submit-word?';
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get(hostUrl + submitWord, function(error, response){
         response.pipe(concat(function(payload){
@@ -94,7 +94,7 @@ tape('submitWord endpoint returns an error object when no word is provided', fun
 });
 
 tape('submitWord endpoint when total words are submitted returns a full sentence', function(t){
-    var submitWord = 'submit-word:pretty';
+    var submitWord = 'submit-word?word=pretty';
     madlibber.userBlanksSetter(madlibber.testUserBlanksAlmostFull);
     madlibber.currentMadLibSetter(madlibber.testMadlibObj);
     hyperquest.get(hostUrl + submitWord, function(error, response){
@@ -106,7 +106,7 @@ tape('submitWord endpoint when total words are submitted returns a full sentence
 });
 
 tape('submitHandler returns an error when input word does not exist', function(t) {
-    var submitWord = 'submit-word:hewufjkhds';
+    var submitWord = 'submit-word?word=hewufjkhds';
     hyperquest.get(hostUrl + submitWord, function(error, response) {
         response.pipe(concat(function(payload) {
             t.equal(JSON.parse(payload).error, 'hewufjkhds not recognised', 'Checks if word exists in wordnik');
