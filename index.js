@@ -5,7 +5,7 @@ var madlib = document.getElementById('madlib');
 var required;
 
 document.getElementById('start').addEventListener('click', function(e) {
-    document.getElementById('madlib').classList.add('hidden');
+    madlib.classList.add('hidden');
     document.querySelector('.form-container').classList.remove('hidden');
     errorMessage.innerHTML = '';
     madlib.innerHTML = '';
@@ -14,13 +14,13 @@ document.getElementById('start').addEventListener('click', function(e) {
     document.querySelector('.form').classList.toggle('hidden');
     // this.className = 'btn';
     start.addEventListener('load', function(evt) {
-        document.getElementById('word-form').classList.toggle('invisible');
+        wordForm.classList.toggle('invisible');
         document.getElementById('input-field').focus();
 
         var response = JSON.parse(evt.target.response);
 		var nextHint = response.nextHint;
 		var chooseMessage = '';
-		(nextHint[0] === 'A') ? chooseMessage = 'Choose an ' : chooseMessage = 'Choose a ';
+		chooseMessage = (nextHint[0] === 'A') ? 'Choose an ' : 'Choose a ';
 	    displayRequired.innerHTML = chooseMessage + nextHint;
         required = response.partOfSpeech;
     });
@@ -28,7 +28,7 @@ document.getElementById('start').addEventListener('click', function(e) {
     start.send();
 });
 
-document.getElementById('word-form').firstElementChild.addEventListener('input', function(e) {
+wordForm.firstElementChild.addEventListener('input', function(e) {
     var options = {
         fragment: e.target.value,
         type: required,
@@ -62,14 +62,14 @@ document.getElementById('word-form').firstElementChild.addEventListener('input',
 });
 
 function autofill(evt) {
-    document.getElementById('word-form').firstElementChild.value = evt.target.innerHTML;
+    wordForm.firstElementChild.value = evt.target.innerHTML;
     document.getElementById('suggestions').innerHTML = '';
     document.getElementById('submit-btn').click();
 
 }
 
 
-document.getElementById('word-form').addEventListener('submit', function(e) {
+wordForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
     function showLoadScreen() {
@@ -93,7 +93,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
         var response = JSON.parse(evt.target.response);
         if (httpStatus === 4 || httpStatus === 5) {
             errorMessage.innerHTML = response.error;
-            document.getElementById('error-message').classList.remove('invisible');
+            errorMessage.classList.remove('invisible');
             document.getElementById('input-field').focus();
         } else if (response.completed) {
             showLoadScreen();
@@ -102,18 +102,18 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
                 document.querySelector('.form').classList.add('invisible');
                 document.getElementById('start').classList.remove('hidden');
                 document.getElementById('start').classList.remove('invisible');
-                document.getElementById('madlib').classList.remove('hidden');
+                madlib.classList.remove('hidden');
                 document.querySelector('.form-container').classList.add('hidden');
-                document.getElementById('error-message').classList.add('invisible');
+                errorMessage.classList.add('invisible');
 				document.getElementById('start').innerHTML = 'Generate annother madlib';
                 madlib.innerHTML = response.data;
                 displayRequired.innerHTML = '';
             }, 3000);
         } else {
-            document.getElementById('error-message').classList.add('invisible');
+            errorMessage.classList.add('invisible');
 			var nextHint = response.nextHint;
 			var chooseMessage = '';
-			(nextHint[0] === 'A') ? chooseMessage = 'Choose an ' : chooseMessage = 'Choose a ';
+            chooseMessage = (nextHint[0] === 'A') ? 'Choose an ' : 'Choose a ';
 		    displayRequired.innerHTML = chooseMessage + nextHint;
             required = response.partOfSpeech;
             document.getElementById('input-field').focus();
