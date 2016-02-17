@@ -105,7 +105,7 @@ document.getElementById('word-form').addEventListener('submit', function(e) {
                 document.getElementById('madlib').classList.remove('hidden');
                 document.querySelector('.form-container').classList.add('hidden');
                 document.getElementById('error-message').classList.add('invisible');
-				document.getElementById('start').innerHTML = 'Generate annother madlib';
+				document.getElementById('start').innerHTML = 'Generate another madlib';
                 madlib.innerHTML = response.data;
                 displayRequired.innerHTML = '';
             }, 3000);

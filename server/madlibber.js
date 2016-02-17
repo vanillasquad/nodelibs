@@ -3,7 +3,6 @@ var currentMadLib = {};
 var userBlanks = [];
 
 function getNextWordData(field) {
-    console.log(field, currentMadLib);
     return (userBlanks.length < currentMadLib[field].length) ? currentMadLib[field][userBlanks.length] : "";
 }
 
