@@ -4,6 +4,7 @@ var madlibber = require('./madlibber.js');
 var wordnik = require('./wordnik.js');
 
 function parseQueryParams(url) {
+    console.log(url);
     var queryString = url.split('?')[1];
     var rawParams = queryString.split('&');
     return rawParams.reduce(function(prev, curr) {
